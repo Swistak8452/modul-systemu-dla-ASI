@@ -1,0 +1,87 @@
+SELECT id, name, date, description
+FROM notification;
+
+SELECT id, name, description, assignedPersonId, typeId, statusId, priorityId, relatedNotificationId
+FROM task;
+
+SELECT task.id, task.name, task.description, u.email AS assignedPersonEmail, t.name AS typeName, s.name AS statusName, p.name AS priorityName, task.relatedNotificationId, n.name AS relatedNotificationName, task.deadline
+FROM task
+LEFT JOIN notification n on task.relatedNotificationId = n.id
+LEFT JOIN priority p on task.priorityId = p.id
+LEFT JOIN status s on task.statusId = s.id
+LEFT JOIN type t on task.typeId = t.id
+LEFT JOIN user u on task.assignedPersonId = u.id
+ORDER BY priorityId DESC, deadline;
+
+
+SELECT id, name, date, description
+FROM notification
+ORDER BY date DESC;
+
+INSERT INTO task(name, description, assignedPersonId, typeId, statusId, priorityId, relatedNotificationId, deadline)
+                        VALUES ('Nazwa', 'Opis', 6, 1, 1, 1, null, '2019-08-20 00:00:00');
+SET @tId = (SELECT LAST_INSERT_ID());
+INSERT INTO taskhistory(taskId, editedById, changeNumber,
+                        previousAssignedPersonId, newAssignedPersonId,
+                        previousName, newName,
+                        previousDeadline, newDeadline,
+                        previousTypeId, newTypeId,
+                        previousStatusId, newStatusId,
+                        previousPriorityId, newPriorityId,
+                        previousDescription, newDescription,
+                        previousRelatedNotificationId, newRelatedNotificationId)
+VALUES (@tId, 6, 0,
+        null,(SELECT assignedPersonId FROM task WHERE task.id = @tId),
+        null,(SELECT name FROM task WHERE task.id = @tId),
+        null, (SELECT deadline FROM task WHERE task.id = @tId),
+        null, (SELECT typeId FROM task WHERE task.id = @tId),
+        null,(SELECT statusId FROM task WHERE task.id = @tId),
+        null,(SELECT statusId FROM task WHERE task.id = @tId),
+        null,(SELECT description FROM task WHERE task.id = @tId),
+        null,(SELECT relatedNotificationId FROM task WHERE task.id = @tId));
+
+INSERT INTO notification(name, description)
+VALUES ('Zgłoszenie', 'Opis zgłoszenia');
+SET @nId = (SELECT LAST_INSERT_ID());
+INSERT INTO notificationhistory(notificationId, editedById, changeNumber,
+                                previousName, newName,
+                                previousDate, newDate,
+                                previousDescription, newDescription)
+VALUES (@nId, 6, 0,
+        null, (SELECT name FROM notification WHERE notification.id = @nId),
+        null, (SELECT date FROM notification WHERE notification.id = @nId),
+        null, (SELECT description FROM notification WHERE notification.id = @nId));
+
+
+SET @tId = 19;
+SET @changindTaskHistoryId = ((SELECT MAX(changeNumber) FROM taskhistory WHERE taskId = @tId)+1 );
+INSERT INTO taskhistory(taskId, editedById, changeNumber,
+                        previousAssignedPersonId, newAssignedPersonId,
+                        previousName, newName,
+                        previousDeadline, newDeadline,
+                        previousTypeId, newTypeId,
+                        previousStatusId, newStatusId,
+                        previousPriorityId, newPriorityId,
+                        previousDescription, newDescription,
+                        previousRelatedNotificationId, newRelatedNotificationId)
+VALUES (@tId, 6, @changindTaskHistoryId,
+        (SELECT assignedPersonId FROM task WHERE task.id = @tId), 6,
+        (SELECT name FROM task WHERE task.id = @tId), 'Name',
+        (SELECT deadline FROM task WHERE task.id = @tId), '2019-08-20 00:00:00',
+        (SELECT typeId FROM task WHERE task.id = @tId), 2,
+        (SELECT statusId FROM task WHERE task.id = @tId), 3,
+        (SELECT priorityId FROM task WHERE task.id = @tId), 3,
+        (SELECT description FROM task WHERE task.id = @tId), 'Description',
+        (SELECT relatedNotificationId FROM task WHERE task.id = @tId), 5
+        );
+SET @thId = (SELECT LAST_INSERT_ID());
+UPDATE task
+SET name = 'Name',
+    description = 'Description',
+    assignedPersonId = 6,
+    typeId = 2,
+    statusId = 3,
+    priorityId = 3,
+    relatedNotificationId = 5,
+    deadline = '2019-08-20 00:00:00'
+WHERE task.id = @tId;
