@@ -12,13 +12,13 @@ public class Task {
     @Id
     @Column(unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
     private String name;
     @Column(name = "description", columnDefinition = "MEDIUMTEXT")
     private String description;
     @ManyToOne
-    @JoinColumn(name = "fk_assignedPerson")
-    private User user;
+    @JoinColumn(name = "fk_assigned_person")
+    private User assignedPerson;
     @ManyToOne
     @JoinColumn(name = "fk_type")
     private Type type;
@@ -29,9 +29,10 @@ public class Task {
     @JoinColumn(name = "fk_priority")
     private Priority priority;
     @ManyToOne
-    @JoinColumn(name = "fk_notification")
-    private Notification notification;
+    @JoinColumn(name = "fk_related_notification")
+    private Notification relatedNotification;
     private Date deadline;
+    private boolean archived;
     @OneToMany(mappedBy = "task")
     private List<TaskHistory> taskHistories = new ArrayList<TaskHistory>();
 
@@ -39,17 +40,19 @@ public class Task {
         super();
     }
 
-    public Task(String name, String description, User user, Type type, Status status, Priority priority,
-                Notification notification, Date deadline){
+    public Task(String name, String description, User assignedPerson, Type type,
+                Status status, Priority priority,
+                Notification relatedNotification, Date deadline, boolean archived){
         super();
         this.name = name;
         this.description = description;
-        this.user = user;
+        this.assignedPerson = assignedPerson;
         this.type = type;
         this.status = status;
         this.priority = priority;
-        this.notification = notification;
+        this.relatedNotification = relatedNotification;
         this.deadline = deadline;
+        this.archived = archived;
     }
 
     public List<TaskHistory> getTaskHistories() {
@@ -60,11 +63,19 @@ public class Task {
         this.taskHistories = taskHistories;
     }
 
-    public long getId() {
+    public boolean isArchived() {
+        return archived;
+    }
+
+    public void setArchived(boolean archived) {
+        this.archived = archived;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -84,12 +95,12 @@ public class Task {
         this.description = description;
     }
 
-    public User getUser() {
-        return user;
+    public User getAssignedPerson() {
+        return assignedPerson;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setAssignedPerson(User assignedPerson) {
+        this.assignedPerson = assignedPerson;
     }
 
     public Type getType() {
@@ -116,12 +127,12 @@ public class Task {
         this.priority = priority;
     }
 
-    public Notification getNotification() {
-        return notification;
+    public Notification getRelatedNotification() {
+        return relatedNotification;
     }
 
-    public void setNotification(Notification notification) {
-        this.notification = notification;
+    public void setRelatedNotification(Notification relatedNotification) {
+        this.relatedNotification = relatedNotification;
     }
 
     public Date getDeadline() {

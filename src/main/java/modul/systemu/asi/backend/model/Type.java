@@ -15,8 +15,10 @@ public class Type {
     private String name;
     @OneToMany(mappedBy = "type")
     private List<Task> tasks = new ArrayList<Task>();
-    @ManyToMany(mappedBy = "types")
-    private List<TaskHistory> taskHistories = new ArrayList<TaskHistory>();
+    @OneToMany(mappedBy = "previousType")
+    private List<TaskHistory> taskHistoriesPreviousType = new ArrayList<TaskHistory>();
+    @OneToMany(mappedBy = "newType")
+    private List<TaskHistory> taskHistoriesNewType = new ArrayList<TaskHistory>();
 
     public Type() {
         super();
@@ -27,12 +29,20 @@ public class Type {
         this.name = name;
     }
 
-    public List<TaskHistory> getTaskHistories() {
-        return taskHistories;
+    public List<TaskHistory> getTaskHistoriesPreviousType() {
+        return taskHistoriesPreviousType;
     }
 
-    public void setTaskHistories(List<TaskHistory> taskHistories) {
-        this.taskHistories = taskHistories;
+    public void setTaskHistoriesPreviousType(List<TaskHistory> taskHistoriesPreviousType) {
+        this.taskHistoriesPreviousType = taskHistoriesPreviousType;
+    }
+
+    public List<TaskHistory> getTaskHistoriesNewType() {
+        return taskHistoriesNewType;
+    }
+
+    public void setTaskHistoriesNewType(List<TaskHistory> taskHistoriesNewType) {
+        this.taskHistoriesNewType = taskHistoriesNewType;
     }
 
     public List<Task> getTasks() {

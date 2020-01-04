@@ -18,12 +18,16 @@ public class User {
     private String function;
     @Column(unique = true, nullable = false)
     private String email;
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "editedBy")
     private List<NotificationHistory> notificationHistories = new ArrayList<NotificationHistory>();
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "assignedPerson")
     private List<Task> tasks = new ArrayList<Task>();
-    @ManyToMany(mappedBy = "users")
-    private List<TaskHistory> taskHistories = new ArrayList<TaskHistory>();
+    @OneToMany(mappedBy = "editedBy")
+    private List<TaskHistory> taskHistoriesEditedBy = new ArrayList<TaskHistory>();
+    @OneToMany(mappedBy = "previousAssignedPerson")
+    private List<TaskHistory> taskHistoriesPreviousAssigned = new ArrayList<TaskHistory>();
+    @OneToMany(mappedBy = "newAssignedPerson")
+    private List<TaskHistory> taskHistoriesNewAssigned = new ArrayList<TaskHistory>();
 
     public User() {
         super();
@@ -37,20 +41,28 @@ public class User {
         this.email = email;
     }
 
-    public List<TaskHistory> getTaskHistories() {
-        return taskHistories;
+    public List<TaskHistory> getTaskHistoriesEditedBy() {
+        return taskHistoriesEditedBy;
     }
 
-    public void setTaskHistories(List<TaskHistory> taskHistories) {
-        this.taskHistories = taskHistories;
+    public void setTaskHistoriesEditedBy(List<TaskHistory> taskHistoriesEditedBy) {
+        this.taskHistoriesEditedBy = taskHistoriesEditedBy;
     }
 
-    public List<NotificationHistory> getNotificationHistories() {
-        return notificationHistories;
+    public List<TaskHistory> getTaskHistoriesPreviousAssigned() {
+        return taskHistoriesPreviousAssigned;
     }
 
-    public void setNotificationHistories(List<NotificationHistory> notificationHistories) {
-        this.notificationHistories = notificationHistories;
+    public void setTaskHistoriesPreviousAssigned(List<TaskHistory> taskHistoriesPreviousAssigned) {
+        this.taskHistoriesPreviousAssigned = taskHistoriesPreviousAssigned;
+    }
+
+    public List<TaskHistory> getTaskHistoriesNewAssigned() {
+        return taskHistoriesNewAssigned;
+    }
+
+    public void setTaskHistoriesNewAssigned(List<TaskHistory> taskHistoriesNewAssigned) {
+        this.taskHistoriesNewAssigned = taskHistoriesNewAssigned;
     }
 
     public List<Task> getTasks() {
@@ -59,6 +71,13 @@ public class User {
 
     public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
+    }
+    public List<NotificationHistory> getNotificationHistories() {
+        return notificationHistories;
+    }
+
+    public void setNotificationHistories(List<NotificationHistory> notificationHistories) {
+        this.notificationHistories = notificationHistories;
     }
 
     public long getId() {

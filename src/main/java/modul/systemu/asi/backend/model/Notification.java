@@ -1,6 +1,7 @@
 package modul.systemu.asi.backend.model;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.*;
 
 @Entity
@@ -9,7 +10,7 @@ public class Notification {
     @Id
     @Column(unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
     private String name;
     private Date date;
     @Column(name = "description", columnDefinition = "MEDIUMTEXT")
@@ -17,10 +18,12 @@ public class Notification {
     private boolean archived;
     @OneToMany(mappedBy = "notification")
     private List<NotificationHistory> notificationHistories = new ArrayList<NotificationHistory>();
-    @OneToMany(mappedBy = "notification")
+    @OneToMany(mappedBy = "relatedNotification")
     private List<Task> tasks = new ArrayList<Task>();
-    @ManyToMany(mappedBy = "notifications")
-    private Set<TaskHistory> taskHistories = new HashSet<>();
+    @OneToMany(mappedBy = "previousRelatedNotification")
+    private List<TaskHistory> taskHistoriesPreviousRelatedNotification = new ArrayList<TaskHistory>();
+    @OneToMany(mappedBy = "newRelatedNotification")
+    private List<TaskHistory> taskHistoriesNewRelatedNotification = new ArrayList<TaskHistory>();
 
     public Notification(){
         super();
@@ -36,20 +39,20 @@ public class Notification {
         this.archived = false;
     }
 
-    public Set<TaskHistory> getTaskHistories() {
-        return taskHistories;
+    public List<TaskHistory> getTaskHistoriesPreviousRelatedNotification() {
+        return taskHistoriesPreviousRelatedNotification;
     }
 
-    public void setTaskHistories(Set<TaskHistory> taskHistories) {
-        this.taskHistories = taskHistories;
+    public void setTaskHistoriesPreviousRelatedNotification(List<TaskHistory> taskHistoriesPreviousRelatedNotification) {
+        this.taskHistoriesPreviousRelatedNotification = taskHistoriesPreviousRelatedNotification;
     }
 
-    public List<NotificationHistory> getNotificationHistories() {
-        return notificationHistories;
+    public List<TaskHistory> getTaskHistoriesNewRelatedNotification() {
+        return taskHistoriesNewRelatedNotification;
     }
 
-    public void setNotificationHistories(List<NotificationHistory> notificationHistories) {
-        this.notificationHistories = notificationHistories;
+    public void setTaskHistoriesNewRelatedNotification(List<TaskHistory> taskHistoriesNewRelatedNotification) {
+        this.taskHistoriesNewRelatedNotification = taskHistoriesNewRelatedNotification;
     }
 
     public List<Task> getTasks() {
@@ -60,11 +63,19 @@ public class Notification {
         this.tasks = tasks;
     }
 
-    public long getId() {
+    public List<NotificationHistory> getNotificationHistories() {
+        return notificationHistories;
+    }
+
+    public void setNotificationHistories(List<NotificationHistory> notificationHistories) {
+        this.notificationHistories = notificationHistories;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

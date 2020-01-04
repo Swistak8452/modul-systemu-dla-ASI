@@ -13,7 +13,7 @@
         <div class="container">
             <p>
                 <span sec:authorize="isAuthenticated()" style="display: inline-block;">
-                    Zalogowano jako: <span id="username-of-logged-user" sec:authentication="name"></span>
+                    Zalogowano jako: <span id="username-of-logged-editedBy" sec:authentication="name"></span>
                     <!--Roles: <span sec:authentication="principal.authorities"></span> |-->
                     <a th:href="@{/logout}">Wyloguj</a>
                 </span>

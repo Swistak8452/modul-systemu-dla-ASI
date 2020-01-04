@@ -11,12 +11,14 @@ public class Status {
     @Id
     @Column(unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
     private String name;
     @OneToMany(mappedBy = "status")
     private List<Task> tasks = new ArrayList<Task>();
-    @ManyToMany(mappedBy = "statuses")
-    private List<TaskHistory> taskHistories = new ArrayList<TaskHistory>();
+    @OneToMany(mappedBy = "previousStatus")
+    private List<TaskHistory> taskHistoriesPreviousStatus = new ArrayList<TaskHistory>();
+    @OneToMany(mappedBy = "newStatus")
+    private List<TaskHistory> taskHistoriesNewStatus = new ArrayList<TaskHistory>();
 
     public Status(){
         super();
@@ -28,12 +30,20 @@ public class Status {
         this.name = name;
     }
 
-    public List<TaskHistory> getTaskHistories() {
-        return taskHistories;
+    public List<TaskHistory> getTaskHistoriesPreviousStatus() {
+        return taskHistoriesPreviousStatus;
     }
 
-    public void setTaskHistories(List<TaskHistory> taskHistories) {
-        this.taskHistories = taskHistories;
+    public void setTaskHistoriesPreviousStatus(List<TaskHistory> taskHistoriesPreviousStatus) {
+        this.taskHistoriesPreviousStatus = taskHistoriesPreviousStatus;
+    }
+
+    public List<TaskHistory> getTaskHistoriesNewStatus() {
+        return taskHistoriesNewStatus;
+    }
+
+    public void setTaskHistoriesNewStatus(List<TaskHistory> taskHistoriesNewStatus) {
+        this.taskHistoriesNewStatus = taskHistoriesNewStatus;
     }
 
     public List<Task> getTasks() {
@@ -44,11 +54,11 @@ public class Status {
         this.tasks = tasks;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

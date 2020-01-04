@@ -2,7 +2,8 @@ package modul.systemu.asi.backend.model;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
 
 @Entity
 @Table(name = "TaskHistory")
@@ -15,16 +16,48 @@ public class TaskHistory {
     @ManyToOne
     @JoinColumn(name = "fk_task")
     private Task task;
-    private long taskId;
+    @ManyToOne
+    @JoinColumn(name = "fk_edited_by_user")
+    private User editedBy;
     private long changeNumber;
+    @ManyToOne
+    @JoinColumn(name = "fk_previous_assigned_user")
+    private User previousAssignedPerson;
+    @ManyToOne
+    @JoinColumn(name = "fk_new_assigned_user")
+    private User newAssignedPerson;
     private String previousName;
     private String newName;
     private Date previousDeadline;
     private Date newDeadline;
+    @ManyToOne
+    @JoinColumn(name = "fk_previous_type")
+    private Type previousType;
+    @ManyToOne
+    @JoinColumn(name = "fk_new_type")
+    private Type newType;
+    @ManyToOne
+    @JoinColumn(name = "fk_previous_status")
+    private Status previousStatus;
+    @ManyToOne
+    @JoinColumn(name = "fk_new_status")
+    private Status newStatus;
+    @ManyToOne
+    @JoinColumn(name = "fk_previous_priority")
+    private Priority previousPriority;
+    @ManyToOne
+    @JoinColumn(name = "fk_new_priority")
+    private Priority newPriority;
     @Column(name = "previousDescription", columnDefinition = "MEDIUMTEXT")
     private String previousDescription;
     @Column(name = "newDescription", columnDefinition = "MEDIUMTEXT")
     private String newDescription;
+    @ManyToOne
+    @JoinColumn(name = "fk_previous_related_notification")
+    private Notification previousRelatedNotification;
+    @ManyToOne
+    @JoinColumn(name = "fk_new_related_notification")
+    private Notification newRelatedNotification;
     private Date changeDateTime;
 
     private Date returnDateNow() {
@@ -39,94 +72,32 @@ public class TaskHistory {
         this.changeDateTime = returnDateNow();
     }
 
-    public TaskHistory(Task task, long taskId, long changeNumber, String previousName, String newName,
-                       Date previousDeadline, Date newDeadline, Set<User> users, Set<Type> types,
-                       Set<Status> statuses, Set<Priority> priorities, Set<Notification> notifications,
-                       String previousDescription, String newDescription, Date changeDateTime) {
+    public TaskHistory(Task task, User editedBy, long changeNumber,
+                       User previousAssignedPerson, User newAssignedPerson,
+                       String previousName, String newName, Date previousDeadline, Date newDeadline,
+                       Type previousType, Type newType, Status previousStatus, Status newStatus,
+                       Priority previousPriority, Priority newPriority,
+                       String previousDescription, String newDescription,
+                       Notification previousRelatedNotification, Notification newRelatedNotification) {
         this.task = task;
-        this.taskId = taskId;
         this.changeNumber = changeNumber;
+        this.previousAssignedPerson = previousAssignedPerson;
+        this.newAssignedPerson = newAssignedPerson;
         this.previousName = previousName;
         this.newName = newName;
         this.previousDeadline = previousDeadline;
         this.newDeadline = newDeadline;
-        this.users = users;
-        this.types = types;
-        this.statuses = statuses;
-        this.priorities = priorities;
-        this.notifications = notifications;
+        this.previousType = previousType;
+        this.newType = newType;
+        this.previousStatus = previousStatus;
+        this.newStatus = newStatus;
+        this.previousPriority = previousPriority;
+        this.newPriority = newPriority;
         this.previousDescription = previousDescription;
         this.newDescription = newDescription;
-        this.changeDateTime = changeDateTime;
-    }
-
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "task_history_notification",
-            joinColumns = { @JoinColumn(name = "TASK_HISTORY_ID",
-                    nullable = false, updatable = false)},
-            inverseJoinColumns = { @JoinColumn(name = "NOTIFICATION_ID",
-                    nullable = false, updatable = false)})
-    Set<Notification> notifications = new HashSet<>();
-
-    public Set<Notification> getNotifications() {
-        return notifications;
-    }
-
-    public void setNotifications(Set<Notification> notifications) {
-        this.notifications = notifications;
-    }
-
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "task_history_priority", joinColumns = {
-            @JoinColumn(name = "TASK_HISTORY_ID", nullable = false, updatable = false)},
-            inverseJoinColumns = { @JoinColumn(name = "PRIORITY_ID", nullable = false, updatable = false)})
-    Set<Priority> priorities = new HashSet<>();
-
-    public Set<Priority> getPriorities() {
-        return priorities;
-    }
-
-    public void setPriorities(Set<Priority> priorities) {
-        this.priorities = priorities;
-    }
-
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "task_history_user", joinColumns = {
-            @JoinColumn(name = "TASK_HISTORY_ID", nullable = false, updatable = false)},
-            inverseJoinColumns = { @JoinColumn(name = "USER_ID", nullable = false, updatable = false)})
-    Set<User> users = new HashSet<>();
-    public Set<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
-    }
-
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "task_history_type", joinColumns = {
-            @JoinColumn(name = "TASK_HISTORY_ID", nullable = false, updatable = false)},
-            inverseJoinColumns = { @JoinColumn(name = "TYPE_ID", nullable = false, updatable = false)})
-    Set<Type> types = new HashSet<>();
-    public Set<Type> getTypes() {
-        return types;
-    }
-
-    public void setTypes(Set<Type> types) {
-        this.types = types;
-    }
-
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "task_history_status", joinColumns = {
-            @JoinColumn(name = "TASK_HISTORY_ID", nullable = false, updatable = false)},
-            inverseJoinColumns = { @JoinColumn(name = "STATUS_ID", nullable = false, updatable = false)})
-    Set<Status> statuses = new HashSet<>();
-    public Set<Status> getStatuses() {
-        return statuses;
-    }
-
-    public void setStatuses(Set<Status> statuses) {
-        this.statuses = statuses;
+        this.previousRelatedNotification = previousRelatedNotification;
+        this.newRelatedNotification = newRelatedNotification;
+        this.changeDateTime = returnDateNow();
     }
 
     public long getId() {
@@ -145,12 +116,12 @@ public class TaskHistory {
         this.task = task;
     }
 
-    public long getTaskId() {
-        return taskId;
+    public User getEditedBy() {
+        return editedBy;
     }
 
-    public void setTaskId(long taskId) {
-        this.taskId = taskId;
+    public void setEditedBy(User editedBy) {
+        this.editedBy = editedBy;
     }
 
     public long getChangeNumber() {
@@ -159,6 +130,22 @@ public class TaskHistory {
 
     public void setChangeNumber(long changeNumber) {
         this.changeNumber = changeNumber;
+    }
+
+    public User getPreviousAssignedPerson() {
+        return previousAssignedPerson;
+    }
+
+    public void setPreviousAssignedPerson(User previousAssignedPerson) {
+        this.previousAssignedPerson = previousAssignedPerson;
+    }
+
+    public User getNewAssignedPerson() {
+        return newAssignedPerson;
+    }
+
+    public void setNewAssignedPerson(User newAssignedPerson) {
+        this.newAssignedPerson = newAssignedPerson;
     }
 
     public String getPreviousName() {
@@ -193,6 +180,54 @@ public class TaskHistory {
         this.newDeadline = newDeadline;
     }
 
+    public Type getPreviousType() {
+        return previousType;
+    }
+
+    public void setPreviousType(Type previousType) {
+        this.previousType = previousType;
+    }
+
+    public Type getNewType() {
+        return newType;
+    }
+
+    public void setNewType(Type newType) {
+        this.newType = newType;
+    }
+
+    public Status getPreviousStatus() {
+        return previousStatus;
+    }
+
+    public void setPreviousStatus(Status previousStatus) {
+        this.previousStatus = previousStatus;
+    }
+
+    public Status getNewStatus() {
+        return newStatus;
+    }
+
+    public void setNewStatus(Status newStatus) {
+        this.newStatus = newStatus;
+    }
+
+    public Priority getPreviousPriority() {
+        return previousPriority;
+    }
+
+    public void setPreviousPriority(Priority previousPriority) {
+        this.previousPriority = previousPriority;
+    }
+
+    public Priority getNewPriority() {
+        return newPriority;
+    }
+
+    public void setNewPriority(Priority newPriority) {
+        this.newPriority = newPriority;
+    }
+
     public String getPreviousDescription() {
         return previousDescription;
     }
@@ -207,6 +242,22 @@ public class TaskHistory {
 
     public void setNewDescription(String newDescription) {
         this.newDescription = newDescription;
+    }
+
+    public Notification getPreviousRelatedNotification() {
+        return previousRelatedNotification;
+    }
+
+    public void setPreviousRelatedNotification(Notification previousRelatedNotification) {
+        this.previousRelatedNotification = previousRelatedNotification;
+    }
+
+    public Notification getNewRelatedNotification() {
+        return newRelatedNotification;
+    }
+
+    public void setNewRelatedNotification(Notification newRelatedNotification) {
+        this.newRelatedNotification = newRelatedNotification;
     }
 
     public Date getChangeDateTime() {

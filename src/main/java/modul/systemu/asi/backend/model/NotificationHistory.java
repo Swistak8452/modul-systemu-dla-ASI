@@ -11,14 +11,14 @@ public class NotificationHistory {
     @Id
     @Column(unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
     @ManyToOne
     @JoinColumn(name = "fk_notification")
     private Notification notification;
     @ManyToOne
-    @JoinColumn(name = "fk_user")
-    private User user;
-    private long changeNumber;
+    @JoinColumn(name = "fk_edited_by")
+    private User editedBy;
+    private Long changeNumber;
     private String previousName;
     private String newName;
     private Date previousDate;
@@ -43,13 +43,13 @@ public class NotificationHistory {
         this.changeDateTime = returnDateNow();
     }
 
-    public NotificationHistory(Notification notification,User user, long changeNumber,
+    public NotificationHistory(Notification notification, User editedBy, long changeNumber,
                                String previousName, String newName, Date previousDate,
                                Date newDate, String previousDescription, String newDescription,
                                boolean previousArchived, boolean newArchived){
         super();
         this.notification = notification;
-        this.user = user;
+        this.editedBy = editedBy;
         this.changeNumber = changeNumber;
         this.previousName = previousName;
         this.newName = newName;
@@ -64,11 +64,11 @@ public class NotificationHistory {
 
 
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -80,19 +80,19 @@ public class NotificationHistory {
         this.notification = notification;
     }
 
-    public User getUser() {
-        return user;
+    public User getEditedBy() {
+        return editedBy;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setEditedBy(User editedBy) {
+        this.editedBy = editedBy;
     }
 
-    public long getChangeNumber() {
+    public Long getChangeNumber() {
         return changeNumber;
     }
 
-    public void setChangeNumber(long changeNumber) {
+    public void setChangeNumber(Long changeNumber) {
         this.changeNumber = changeNumber;
     }
 

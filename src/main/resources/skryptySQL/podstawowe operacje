@@ -10,7 +10,7 @@ LEFT JOIN notification n on task.relatedNotificationId = n.id
 LEFT JOIN priority p on task.priorityId = p.id
 LEFT JOIN status s on task.statusId = s.id
 LEFT JOIN type t on task.typeId = t.id
-LEFT JOIN user u on task.assignedPersonId = u.id
+LEFT JOIN editedBy u on task.assignedPersonId = u.id
 ORDER BY priorityId DESC, deadline;
 
 

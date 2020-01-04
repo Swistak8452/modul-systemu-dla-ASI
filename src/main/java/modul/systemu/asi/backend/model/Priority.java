@@ -10,12 +10,14 @@ public class Priority {
     @Id
     @Column(unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
     private String name;
     @OneToMany(mappedBy = "priority")
     private List<Task> tasks = new ArrayList<Task>();
-    @ManyToMany(mappedBy = "priorities")
-    private List<TaskHistory> taskHistories = new ArrayList<TaskHistory>();
+    @OneToMany(mappedBy = "previousPriority")
+    private List<TaskHistory> taskHistoriesPreviousPriority = new ArrayList<TaskHistory>();
+    @OneToMany(mappedBy = "newPriority")
+    private List<TaskHistory> taskHistoriesNewPriority = new ArrayList<TaskHistory>();
 
     public Priority(){
         super();
@@ -27,12 +29,20 @@ public class Priority {
         this.name = name;
     }
 
-    public List<TaskHistory> getTaskHistories() {
-        return taskHistories;
+    public List<TaskHistory> getTaskHistoriesPreviousPriority() {
+        return taskHistoriesPreviousPriority;
     }
 
-    public void setTaskHistories(List<TaskHistory> taskHistories) {
-        this.taskHistories = taskHistories;
+    public void setTaskHistoriesPreviousPriority(List<TaskHistory> taskHistoriesPreviousPriority) {
+        this.taskHistoriesPreviousPriority = taskHistoriesPreviousPriority;
+    }
+
+    public List<TaskHistory> getTaskHistoriesNewPriority() {
+        return taskHistoriesNewPriority;
+    }
+
+    public void setTaskHistoriesNewPriority(List<TaskHistory> taskHistoriesNewPriority) {
+        this.taskHistoriesNewPriority = taskHistoriesNewPriority;
     }
 
     public List<Task> getTasks() {
@@ -43,11 +53,11 @@ public class Priority {
         this.tasks = tasks;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
