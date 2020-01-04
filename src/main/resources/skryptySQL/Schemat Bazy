@@ -30,7 +30,8 @@ create table notification
     id          int auto_increment primary key,
     name        varchar(255) not null,
     date        datetime default current_timestamp()     not null,
-    description text         not null
+    description text         not null,
+    archived    bit          not null
 );
 
 create table task
@@ -63,6 +64,8 @@ create table notificationHistory
     newDate             datetime                              not null,
     previousDescription text,
     newDescription      text                                  not null,
+    previousArchived    bit,
+    newArchived         bit                                   not null,
     changeDateTime      timestamp default current_timestamp() not null,
     FOREIGN KEY (editedById) REFERENCES user (id),
     FOREIGN KEY (notificationId) REFERENCES notification (id)
