@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/all/layout}">
+<head>
+    <title>Strona główna</title>
+    <script>
+        localStorage.clear();
+    </script>
+</head>
+<body>
+<div layout:fragment="content" th:remove="tag">
+    <script th:if="${notificationsForLayout != 0}">
+        localStorage.setItem('notificationsAlert', true);
+    </script>
+    <script th:if="${tasksForLayout != 0}">
+        localStorage.setItem('tasksAlert', true);
+    </script>
+    Główna!
+</div>
+</body>
+</html>

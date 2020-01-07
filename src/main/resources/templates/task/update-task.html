@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/tasks/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Edycja Zadania</title>
+    <script type="text/javascript" th:src="@{/js/update/validate-updated-task.js}"></script>
+</head>
+<body>
+<div layout:fragment="content" th:remove="tag">
+    <br>
+    <br>
+    <div class="jumbotron">
+        <form>
+            <div class="form-group">
+                <label for="taskName">Nazwa zadania:</label>
+                <input class="form-control" id="taskName" style="width: 500px" th:value="${task.name}">
+                <div id="invalidTaskName" class="invalid-feedback" style="display: none">
+                    Wpisz nazwę zadania.
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="taskPriority">Wybierz priorytet zadania:</label>
+                <select class="form-control" id="taskPriority" style="width: auto">
+                    <option th:each="priority : ${priorities}"
+                            th:value="${priority.id}"
+                            th:text="${priority.name}"
+                            th:selected="${task.priority.id}">
+                    </option>
+                </select>
+                <div id="invalidTaskPriority" class="invalid-feedback" style="display: none">
+                    Wybierz priorytet zadania.
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="taskType">Wybierz typ zadania:</label>
+                <select class="form-control" id="taskType" style="width: auto">
+                    <option th:each="type : ${types}"
+                            th:value="${type.id}"
+                            th:text="${type.name}"
+                            th:selected="${task.type.id}">
+                    </option>
+                </select>
+                <div id="invalidTaskType" class="invalid-feedback" style="display: none">
+                    Wybierz typ zadania.
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="taskRelatedNotification">Wybierz powiązane zgłoszenie:</label>
+                <select class="form-control" id="taskRelatedNotification" style="width: auto">
+                    <option th:value="0" th:text="------"></option>
+                    <option th:each="notification : ${notifications}"
+                            th:value="${notification.id}"
+                            th:text="${notification.name}"
+                            th:selected="${task.relatedNotification.id}">
+                    </option>
+                </select>
+                <div id="invalidTaskRelatedNotification" class="invalid-feedback" style="display: none">
+                    Wybierz powiązane zgłoszenie z zadaniem.
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="taskAssignedPerson">Przypisz użytkownika:</label>
+                <select class="form-control" id="taskAssignedPerson" style="width: auto">
+                    <option th:value="0" th:text="------"></option>
+                    <option th:each="user : ${users}"
+                            th:value="${user.id}"
+                            th:text="${user.email}"
+                            th:selected="${task.assignedPerson.id}">
+                    </option>
+                </select>
+                <div id="invalidTaskAssignedPerson" class="invalid-feedback" style="display: none">
+                    Przypisz osobę do zadania.
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="taskStatus">Status:</label>
+                <select class="form-control" id="taskStatus" style="width: auto">
+                    <option th:each="status : ${statuses}"
+                            th:value="${status.id}"
+                            th:text="${status.name}"
+                            th:selected="${task.status.id}">
+                    </option>
+                </select>
+                <div id="invalidTaskStatus" class="invalid-feedback" style="display: none">
+                    Błędny status.
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="taskDescription">Opis zadania:</label>
+                <textarea class="form-control" id="taskDescription" rows="3" th:text="${task.description}"></textarea>
+                <div id="invalidTaskDescription" class="invalid-feedback" style="display: none">
+                    Wprowadź opis zadania.
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="taskDeadline">Termin wykonania:</label>
+                <input class="form-control" id="taskDeadline" type="date"
+                       th:value="${#calendars.format(task.deadline, 'yyyy-MM-dd')}" style="width: auto">
+                <div id="invalidTaskDeadline" class="invalid-feedback" style="display: none">
+                    Wybierz termin wykonania zadania.
+                </div>
+            </div>
+            <div style="text-align:center; height: 70px">
+                <a class="btn btn-primary" style="width: 200px; color: white" onclick="validateTask();">Zaktualizuj
+                    zadanie</a>
+                <span id="urlToUpdateTask" th:href="@{/tasks/save-updated-task}" style="display: none"></span>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

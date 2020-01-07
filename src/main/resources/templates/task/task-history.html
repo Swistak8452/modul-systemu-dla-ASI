@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/tasks/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Historia Zadania</title>
+</head>
+<body>
+<div layout:fragment="content" th:remove="tag">
+    <br>
+    <br>
+    <div class="jumbotron" style="background-color: #75b8f4">
+        <h1 class="display-4" style="text-align: center;font-size: 30px"><span style="font-weight: bold">Nazwa zadania: </span><span th:text="${task.name}"></span></h1>
+    </div>
+    <div class="jumbotron" th:each="taskHistory: ${taskHistories}">
+        <br>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Numer zmiany:</th>
+                <th scope="col">Edytował:</th>
+                <th scope="col"></th>
+                <th scope="col">Zmieniono:</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <span th:if="${taskHistory.changeNumber == 0}">
+                    <th scope="row">Utworzono</th>
+                </span>
+                <span th:if="${taskHistory.changeNumber != 0}">
+                    <th scope="row" th:text="${taskHistory.changeNumber}"></th>
+                </span>
+                <td><span th:text="${taskHistory.editedBy.email}"></span><td>
+                <td><span th:text="${#dates.format(taskHistory.changeDateTime, 'dd-MM-yyyy HH:mm:ss')}"></span></td>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+        <hr>
+        <h5 style="text-align: center;">Wprowadzone zmiany:</h5>
+        <br>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col" style="width: 20%">#</th>
+                <th scope="col" style="width: 40%">Przed</th>
+                <th scope="col" style="width: 40%">Po</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row">Nazwa zadania:</th>
+                <td th:text="${taskHistory.previousName}"></td>
+                <td th:text="${taskHistory.newName}"></td>
+            </tr>
+            <tr>
+                <th scope="row">Typ zadania:</th>
+                <td th:if="${taskHistory.previousType == null}">------</td>
+                <td th:if="${taskHistory.previousType != null}" th:text="${taskHistory.previousType.name}"></td>
+                <td th:text="${taskHistory.newType.name}"></td>
+            </tr>
+            <tr>
+                <th scope="row">Status:</th>
+                <td th:if="${taskHistory.previousStatus == null}">------</td>
+                <td th:if="${taskHistory.previousStatus != null}" th:text="${taskHistory.previousStatus.name}"></td>
+                <td th:text="${taskHistory.newStatus.name}"></td>
+            </tr>
+            <tr>
+                <th scope="row">Termin wykonania:</th>
+                <td th:if="${taskHistory.previousDeadline == null}">------</td>
+                <td th:if="${taskHistory.previousDeadline != null}"
+                    th:text="${#dates.format(taskHistory.previousDeadline, 'dd-MM-yyyy')}"></td>
+                <td th:text="${#dates.format(taskHistory.newDeadline, 'dd-MM-yyyy')}"></td>
+            </tr>
+            <tr>
+                <th scope="row">Priorytet:</th>
+                <td th:if="${taskHistory.previousPriority == null}">------</td>
+                <td th:if="${taskHistory.previousPriority != null}" th:text="${taskHistory.previousPriority.name}"></td>
+                <td th:text="${taskHistory.newPriority.name}"></td>
+            </tr>
+            <tr>
+                <th scope="row">Osoba przypisana:</th>
+                <td th:if="${taskHistory.previousAssignedPerson == null}">------</td>
+                <td th:if="${taskHistory.previousAssignedPerson != null}"
+                    th:text="${taskHistory.previousAssignedPerson.email}"></td>
+                <td th:text="${taskHistory.newAssignedPerson.email}"></td>
+            </tr>
+            <tr>
+                <th scope="row">Powiązane zgloszenie:</th>
+                <td th:if="${taskHistory.previousRelatedNotification == null}">------</td>
+                <td th:if="${taskHistory.previousRelatedNotification != null}"
+                    th:text="${taskHistory.previousRelatedNotification.name}"></td>
+                <td th:text="${taskHistory.newRelatedNotification.name}"></td>
+            </tr>
+            <tr>
+                <th scope="row">Opis:</th>
+                <td th:if="${taskHistory.previousDescription == null}">------</td>
+                <td th:if="${taskHistory.previousDescription != null}"
+                    th:text="${taskHistory.previousDescription}"></td>
+                <td th:text="${taskHistory.newDescription}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+    </div>
+    <div style="text-align: center">
+        <a class="btn btn-primary btn-lg" href="#" th:taskId="${task.id}" style="width: 200px" role="button">Wstecz</a>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,22 @@
+.nav-bar-font-size{
+    font-size: 24px;
+}
+
+.nav-bar-logout{
+    color: dodgerblue;
+}
+
+.navbar-nav {
+    width: 100%;
+    text-align: center;
+}
+
+.navbar-nav li {
+    float: none;
+    display: inline-block;
+}
+
+
+.nav-bar-background-color{
+    background-color: #E5E5E5 !important;
+}

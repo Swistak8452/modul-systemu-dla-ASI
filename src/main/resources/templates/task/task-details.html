@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/tasks/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Szczegóły Zadania</title>
+</head>
+<body>
+<div layout:fragment="content" th:remove="tag">
+    <br>
+    <br>
+    <div class="jumbotron">
+        <h1 class="display-4" style="text-align: center;" th:text="${task.name}"></h1>
+        <hr class="my-4">
+        <p>
+            <span style="font-weight: bold">Typ zadania: </span><span th:text="${task.type.name}"></span>
+        </p>
+        <hr class="my-4">
+        <p>
+            <span style="font-weight: bold">Status: </span><span th:text="${task.status.name}"></span>
+        </p>
+        <hr class="my-4">
+        <p>
+            <span style="font-weight: bold">Termin wykonania: </span><span
+                th:text="${#dates.format(task.deadline, 'dd-MM-yyyy')}"></span>
+        </p>
+        <hr class="my-4">
+        <p><span style="font-weight: bold">Priorytet: </span>
+            <span th:switch="${task.priority.id}">
+                                <span th:case="1" style="color: #4ead2d">
+                                    <span class="card-text" th:text="${task.priority.name}"></span>
+                                </span>
+                                <span th:case="2" style="color: #c4ac0d">
+                                    <span class="card-text" th:text="${task.priority.name}"></span>
+                                </span>
+                                <span th:case="3" style="color: #cd8f3b">
+                                    <span class="card-text" th:text="${task.priority.name}"></span>
+                                </span>
+                                <span th:case="4" style="color: #cc491a">
+                                    <span class="card-text" th:text="${task.priority.name}"></span>
+                                </span>
+                                <span th:case="5" style="color: #cd0000">
+                                    <span class="card-text" th:text="${task.priority.name}"></span>
+                                </span>
+                            </span>
+        </p>
+        <span th:if="${task.assignedPerson != null}">
+            <hr class="my-4">
+            <p>
+                <span style="font-weight: bold">Osoba przypisana: </span><span
+                    th:text="${task.assignedPerson.email}"></span>
+            </p>
+            </span>
+        <span th:if="${task.relatedNotification != null}">
+                <hr class="my-4">
+                <p>
+                    <span style="font-weight: bold">Powiązane zgłoszenie: </span><a th:text="${task.relatedNotification.name}"></a>
+                </p>
+            </span>
+        <hr class="my-4">
+        <p>
+            <span style="font-weight: bold">Opis: </span><span
+                th:text="${task.description}"></span>
+        </p>
+        </span>
+        <hr class="my-4">
+        <span th:switch="${task.archived}">
+                                <div th:case="true" style="background-color: #f48b71;height: 50px;text-align: center;">
+                                        <p style="position: relative; float: left; top: 50%;
+                                        left: 50%; transform: translate(-50%, -50%);font-weight: bold;">
+                                            Zarchiwizowano
+                                        </p>
+                                </div>
+                                <div th:case="false" style="background-color: #a8f47a;height: 50px;text-align: center;">
+                                        <p style="position: relative; float: left; top: 50%;
+                                        left: 50%; transform: translate(-50%, -50%);font-weight: bold;">
+                                            Zadanie aktywne
+                                        </p>
+                                </div>
+            </span>
+        <hr class="my-4">
+        <div style="text-align:center; height: 70px">
+            <a class="btn btn-primary btn-lg" id="edit-button" role="button" style="width: 200px">Edytuj</a>
+        </div>
+        <hr class="my-4">
+        <div style="text-align:center; height: 70px">
+            <a class="btn btn-success btn-lg" id="task-history-button" role="button" style="width: 400px">Historia zadania</a>
+        </div>
+    </div>
+    <script type="text/javascript" th:src="@{/js/update/update-task.js}"></script>
+</div>
+</body>
+</html>

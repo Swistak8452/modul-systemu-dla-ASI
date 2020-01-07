@@ -1,8 +1,8 @@
 package modul.systemu.asi.backend.services;
 
 import modul.systemu.asi.backend.dao.NotificationHistoryRepository;
-import modul.systemu.asi.backend.model.Notification;
-import modul.systemu.asi.backend.model.NotificationHistory;
+import modul.systemu.asi.frontend.model.Notification;
+import modul.systemu.asi.frontend.model.NotificationHistory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +18,8 @@ public class NotificationHistoryService {
         Notification notification = new Notification();
         notification.setId(id);
         System.out.println("Jedziem");
-        List<NotificationHistory> notificationHistories = notificationHistoryRepository.findByNotificationIsLike(notification);
+        List<NotificationHistory> notificationHistories =
+                notificationHistoryRepository.findAllByNotificationIsLikeOrderByChangeDateTimeDesc(notification);
         for (NotificationHistory notificationHistory: notificationHistories) {
             System.out.println("xxx");
             System.out.println(notificationHistory.getNewDescription());

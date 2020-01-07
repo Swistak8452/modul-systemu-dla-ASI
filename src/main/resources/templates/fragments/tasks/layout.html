@@ -9,10 +9,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
     <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
-    <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">Spring Security Thymeleaf</title>
+    <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">Moduł Systemu dla ASI</title>
 </head>
 <body>
-<th:block th:replace="fragments/all/header :: header"/>
+<th:block th:replace="fragments/tasks/header :: header"/>
 <div class="container">
     <th:block layout:fragment="content"/>
 </div>

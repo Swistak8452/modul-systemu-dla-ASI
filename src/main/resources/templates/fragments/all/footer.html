@@ -9,21 +9,21 @@
     <br>
     <br>
     <br>
-    <footer>
+    <br>
+    <br>
+    <footer style="width: 100%; bottom: 0px;" class="card-footer text-muted">
         <div class="container">
             <p>
                 <span sec:authorize="isAuthenticated()" style="display: inline-block;">
-                    Zalogowano jako: <span id="username-of-logged-editedBy" sec:authentication="name"></span>
-                    <!--Roles: <span sec:authentication="principal.authorities"></span> |-->
-                    <a th:href="@{/logout}">Wyloguj</a>
+                    Zalogowano jako: <span id="username-of-logged-user" sec:authentication="name"></span>
+                    Roles: <span sec:authentication="principal.authorities"></span>
                 </span>
             </p>
         </div>
     </footer>
-
     <script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
     <script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
-
+    <script type="text/javascript" th:src="@{/js/main.js}"></script>
 </th:block>
 </body>
 </html>

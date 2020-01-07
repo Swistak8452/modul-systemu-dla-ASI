@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/tasks/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista Wszystkich Zadań</title>
+</head>
+<body>
+<div layout:fragment="content" th:remove="tag">
+    <script th:if="${notificationsForLayout != 0}">
+        localStorage.setItem('notificationsAlert', true);
+    </script>
+    <script th:if="${tasksForLayout != 0}">
+        localStorage.setItem('tasksAlert', true);
+    </script>
+    <br>
+    <br>
+    <th:block th:with="colCount=${3}">
+        <div th:each="r : ${#numbers.sequence(0, tasks.size(), colCount)}" class="row">
+            <div th:each="c : ${#numbers.sequence(0, colCount - 1)}" th:if="${r + c &lt; tasks.size()}"
+                 style="margin: 10px;">
+                <div class="card" style="width: 18rem;height: 350px">
+                    <div class="card-body" style="height: 90px">
+                        <span style="font-weight: bold" class="card-title">Nazwa: </span><span
+                            th:text="${tasks.get(r + c).name}"></span>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <span style="font-weight: bold">Priorytet: </span>
+                            <span th:switch="${tasks.get(r + c).priority.id}">
+                                <span th:case="1" style="color: #4ead2d">
+                                    <span class="card-text" th:text="${tasks.get(r + c).priority.name}"></span>
+                                </span>
+                                <span th:case="2" style="color: #c4ac0d">
+                                    <span class="card-text" th:text="${tasks.get(r + c).priority.name}"></span>
+                                </span>
+                                <span th:case="3" style="color: #cd8f3b">
+                                    <span class="card-text" th:text="${tasks.get(r + c).priority.name}"></span>
+                                </span>
+                                <span th:case="4" style="color: #cc491a">
+                                    <span class="card-text" th:text="${tasks.get(r + c).priority.name}"></span>
+                                </span>
+                                <span th:case="5" style="color: #cd0000">
+                                    <span class="card-text" th:text="${tasks.get(r + c).priority.name}"></span>
+                                </span>
+                            </span>
+                        </li>
+                        <li class="list-group-item">
+                            <span style="font-weight: bold">Deadline: </span>
+                            <span class="card-text"
+                                  th:text="${#dates.format(tasks.get(r + c).deadline, 'dd-MM-yyyy')}"></span>
+                        </li>
+                        <li class="list-group-item">
+                            <span style="font-weight: bold">Status: </span>
+                            <span class="card-text" style="" th:text="${tasks.get(r + c).status.name}"></span>
+                        </li>
+                        <li class="list-group-item">
+                            <span style="font-weight: bold">Przypisany: </span>
+                            <span th:if="${tasks.get(r + c).assignedPerson == null}">
+                                <span class="card-text" style="color: blue">------</span>
+                            </span>
+                            <span th:if="${tasks.get(r + c).assignedPerson != null}">
+                                <span class="card-text" style="color: blue"
+                                      th:text="${tasks.get(r + c).assignedPerson.email}"></span>
+                            </span>
+                        </li>
+                    </ul>
+                    <div class="card-body" style="text-align:center; height: 70px" >
+                        <a th:id="${tasks.get(r + c).id}" class="btn btn-primary details-button" style="width: 200px">Podgląd</a>
+                    </div>
+                </div>
+                <br>
+            </div>
+            <span style="width: 4%"></span>
+        </div>
+    </th:block>
+    <script type="text/javascript" th:src="@{/js/details/task-details.js}"></script>
+</div>
+</body>
+</html>
