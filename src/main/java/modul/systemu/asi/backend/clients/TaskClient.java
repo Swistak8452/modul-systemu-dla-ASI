@@ -52,14 +52,14 @@ public class TaskClient {
                            @RequestParam String editorsEmail
     ) {
         Task task;
-        if(id == -1){
+        if (id == -1) {
             task = new Task();
-        }else {
+        } else {
             task = taskService.getTaskById(id);
         }
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-            String dateInString = deadline+" 00:00:00";
+            String dateInString = deadline + " 00:00:00";
             Date date = sdf.parse(dateInString);
             task.setDeadline(date);
         } catch (ParseException e) {
@@ -79,21 +79,21 @@ public class TaskClient {
 
     @GetMapping("/tasks/save-updated-task")
     public String saveUpdatedTask(@RequestParam boolean archived,
-                           @RequestParam String deadline,
-                           @RequestParam String description,
-                           @RequestParam String name,
-                           @RequestParam long assignedPersonId,
-                           @RequestParam long priorityId,
-                           @RequestParam long relatedNotificationId,
-                           @RequestParam long statusId,
-                           @RequestParam long typeId,
-                           @RequestParam String editorsEmail,
-                           @RequestParam long taskId
+                                  @RequestParam String deadline,
+                                  @RequestParam String description,
+                                  @RequestParam String name,
+                                  @RequestParam long assignedPersonId,
+                                  @RequestParam long priorityId,
+                                  @RequestParam long relatedNotificationId,
+                                  @RequestParam long statusId,
+                                  @RequestParam long typeId,
+                                  @RequestParam String editorsEmail,
+                                  @RequestParam long taskId
     ) {
         Task task = taskService.getTaskById(taskId);
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-            String dateInString = deadline+" 00:00:00";
+            String dateInString = deadline + " 00:00:00";
             Date date = sdf.parse(dateInString);
             task.setDeadline(date);
         } catch (ParseException e) {

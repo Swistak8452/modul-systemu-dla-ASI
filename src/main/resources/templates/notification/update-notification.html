@@ -5,10 +5,51 @@
 <head>
     <meta charset="UTF-8">
     <title>Edycja Zdarzenia</title>
+    <script type="text/javascript" th:src="@{/js/validate/validate-updated-notification.js}"></script>
 </head>
 <body>
 <div layout:fragment="content" th:remove="tag">
-
+    <br>
+    <br>
+    <div class="jumbotron">
+        <h3 style="text-align: center">Aktualizacja zdarzenia</h3>
+        <hr>
+        <form>
+            <div class="form-group">
+                <label for="notificationName" style="font-weight: bold">Nazwa zdarzenia:</label>
+                <div class="form-group input-group flex-nowrap">
+                    <div class="input-group-prepend" style="background-color: #cbcaca;">
+                        <span class="input-group-text border prepend-label" th:text="${notification.name}"></span>
+                    </div>
+                    <input class="form-control" id="notificationName" style="width: 500px"
+                           th:value="${notification.name}">
+                    <div id="invalidNotificationName" class="invalid-feedback" style="display: none">
+                        Wpisz nazwę zdarzenia.
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="form-group">
+                <label for="notificationDescription" style="font-weight: bold">Opis zdarzenia:</label>
+                <div class="form-group input-group flex-nowrap">
+                    <div class="input-group-prepend border prepend-label" style="width: 40%;">
+                    <p th:text="${notification.description}" style="margin: 15px;"></p>
+                    </div>
+                    <textarea class="form-control" id="notificationDescription" rows="3" th:text="${notification.description}"></textarea>
+                    <div id="invalidNotificationDescription" class="invalid-feedback" style="display: none">
+                        Wprowadź opis zdarzenia.
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div style="text-align:center; height: 70px">
+                <a class="btn btn-primary" style="width: 300px; color: white" onclick="validateUpdatedNotification();">Zaktualizuj
+                    zdarzenie</a>
+                <span id="urlToSaveUpdatedNotification" th:href="@{/notifications/save-updated-notification}"
+                      style="display: none"></span>
+            </div>
+        </form>
+    </div>
 </div>
 </body>
 </html>

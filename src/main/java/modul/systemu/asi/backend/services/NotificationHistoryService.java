@@ -19,7 +19,7 @@ public class NotificationHistoryService {
         notification.setId(id);
         System.out.println("Jedziem");
         List<NotificationHistory> notificationHistories =
-                notificationHistoryRepository.findAllByNotificationIsLikeOrderByChangeDateTimeDesc(notification);
+                notificationHistoryRepository.findAllByNotificationIsLikeOrderByChangeDateTimeAsc(notification);
         for (NotificationHistory notificationHistory: notificationHistories) {
             System.out.println("xxx");
             System.out.println(notificationHistory.getNewDescription());

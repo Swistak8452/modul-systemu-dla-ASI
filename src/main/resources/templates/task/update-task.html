@@ -18,7 +18,7 @@
             <label for="taskName" style="font-weight: bold">Nazwa zadania:</label>
             <div class="form-group input-group flex-nowrap">
                 <div class="input-group-prepend">
-                    <span class="input-group-text" id="addon-wrapping" th:text="${task.name}"></span>
+                    <span class="input-group-text border prepend-label" th:text="${task.name}"></span>
                 </div>
                 <input class="form-control" id="taskName" style="width: 500px" th:value="${task.name}">
                 <div id="invalidTaskName" class="invalid-feedback" style="display: none">
@@ -29,7 +29,7 @@
             <label for="taskPriority" style="font-weight: bold">Wybierz priorytet zadania:</label>
             <div class="form-group input-group flex-nowrap">
                 <div class="input-group-prepend">
-                    <span class="input-group-text" th:text="${task.priority.name}"></span>
+                    <span class="input-group-text border prepend-label" th:text="${task.priority.name}"></span>
                 </div>
                 <select class="form-control" id="taskPriority" style="width: auto">
                     <option th:each="priority : ${priorities}"
@@ -46,7 +46,7 @@
             <label for="taskType" style="font-weight: bold">Wybierz typ zadania:</label>
             <div class="form-group input-group flex-nowrap">
                 <div class="input-group-prepend">
-                    <span class="input-group-text" th:text="${task.type.name}"></span>
+                    <span class="input-group-text border prepend-label" th:text="${task.type.name}"></span>
                 </div>
                 <select class="form-control" id="taskType" style="width: auto">
                     <option th:each="type : ${types}"
@@ -63,7 +63,7 @@
             <label for="taskRelatedNotification" style="font-weight: bold">Wybierz powiązane zgłoszenie:</label>
             <div class="form-group input-group flex-nowrap">
                 <div class="input-group-prepend">
-                    <span class="input-group-text" th:text="${task.relatedNotification.name}"></span>
+                    <span class="input-group-text border prepend-label" th:text="${task.relatedNotification.name}"></span>
                 </div>
                 <select class="form-control" id="taskRelatedNotification" style="width: auto">
                     <option th:value="0" th:text="------"></option>
@@ -81,7 +81,7 @@
             <label for="taskAssignedPerson" style="font-weight: bold">Przypisz użytkownika:</label>
             <div class="form-group input-group flex-nowrap">
                 <div class="input-group-prepend">
-                    <span class="input-group-text" th:text="${task.assignedPerson.email}"></span>
+                    <span class="input-group-text border prepend-label" th:text="${task.assignedPerson.email}"></span>
                 </div>
                 <select class="form-control" id="taskAssignedPerson" style="width: auto">
                     <option th:value="0" th:text="------"></option>
@@ -99,7 +99,7 @@
             <label for="taskStatus" style="font-weight: bold">Status:</label>
             <div class="form-group input-group flex-nowrap">
                 <div class="input-group-prepend">
-                    <span class="input-group-text" th:text="${task.status.name}"></span>
+                    <span class="input-group-text border prepend-label" th:text="${task.status.name}"></span>
                 </div>
                 <select class="form-control" id="taskStatus" style="width: auto">
                     <option th:each="status : ${statuses}"
@@ -115,8 +115,8 @@
             <hr class="my-4">
             <label for="taskDescription" style="font-weight: bold">Opis zadania:</label>
             <div class="form-group input-group flex-nowrap">
-                <div class="input-group-prepend border" th:text="${task.description}" style="width: 40%;
-                border-color: #cbcaca!important; border-radius: 5px!important;">
+                <div class="input-group-prepend border prepend-label" style="width: 40%;">
+                    <p style="margin: 15px;"  th:text="${task.description}"></p>
                 </div>
                 <textarea class="form-control" id="taskDescription" rows="3" th:text="${task.description}"></textarea>
                 <div id="invalidTaskDescription" class="invalid-feedback" style="display: none">
@@ -127,7 +127,7 @@
             <label for="taskDeadline" style="font-weight: bold">Termin wykonania:</label>
             <div class="form-group input-group flex-nowrap">
                 <div class="input-group-prepend">
-                    <span class="input-group-text" th:text="${#calendars.format(task.deadline, 'yyyy-MM-dd')}"></span>
+                    <span class="input-group-text border prepend-label" th:text="${#calendars.format(task.deadline, 'yyyy-MM-dd')}"></span>
                 </div>
                 <input class="form-control" id="taskDeadline" type="date"
                        th:value="${#calendars.format(task.deadline, 'yyyy-MM-dd')}" style="width: auto">

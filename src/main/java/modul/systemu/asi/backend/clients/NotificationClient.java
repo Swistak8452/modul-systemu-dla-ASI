@@ -29,4 +29,18 @@ public class NotificationClient {
         notificationService.addNewNotification(notification, editorsEmail);
         return "notification/save-notification";
     }
+
+    @GetMapping("/notifications/save-updated-notification")
+    public String saveUpdatedNotification(@RequestParam boolean archived,
+                                          @RequestParam String name,
+                                          @RequestParam String description,
+                                          @RequestParam String editorsEmail,
+                                          @RequestParam long notificationId) {
+        Notification notification = notificationService.getNotificationById(notificationId);
+        notification.setArchived(archived);
+        notification.setName(name);
+        notification.setDescription(description);
+        notificationService.updateNotification(notification, editorsEmail);
+        return "notification/save-notification";
+    }
 }

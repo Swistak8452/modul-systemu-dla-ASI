@@ -8,7 +8,72 @@
 </head>
 <body>
 <div layout:fragment="content" th:remove="tag">
-ddddddddddddddddddd
+    <br>
+    <br>
+    <div class="jumbotron" style="background-color: #75b8f4">
+        <h1 class="display-4" style="text-align: center;font-size: 30px"><span style="font-weight: bold">Nazwa zgłoszenia: </span><span
+                th:text="${notification.name}"></span></h1>
+    </div>
+    <div class="jumbotron" th:each="history: ${notificationHistory}">
+        <br>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Numer zmiany:</th>
+                <th scope="col">Edytował:</th>
+                <th scope="col"></th>
+                <th scope="col">Zmieniono:</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <span th:if="${history.changeNumber == 0}">
+                    <th scope="row">Utworzono</th>
+                </span>
+                <span th:if="${history.changeNumber != 0}">
+                    <th scope="row" th:text="${history.changeNumber}"></th>
+                </span>
+                <td><span th:text="${history.editedBy.email}"></span>
+                <td>
+                <td><span th:text="${#dates.format(history.changeDateTime, 'dd-MM-yyyy HH:mm:ss')}"></span></td>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+        <hr>
+        <h5 style="text-align: center;">Wprowadzone zmiany:</h5>
+        <br>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col" style="width: 20%">#</th>
+                <th scope="col" style="width: 40%">Przed</th>
+                <th scope="col" style="width: 40%">Po</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row">Nazwa zgłoszenia:</th>
+                <td th:text="${history.previousName}"></td>
+                <td th:text="${history.newName}"></td>
+            </tr>
+            <tr>
+                <th scope="row">Opis:</th>
+                <td th:if="${history.previousDescription == null}">------</td>
+                <td th:if="${history.previousDescription != null}"
+                    th:text="${history.previousDescription}"></td>
+                <td th:text="${history.newDescription}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+    </div>
+    <div style="text-align: center">
+        <a class="btn btn-primary btn-lg" onclick="window.history.back();" style="width: 200px" role="button">Wstecz</a>
+    </div>
+    <br>
+    <br>
+    <br>
 </div>
 </body>
 </html>

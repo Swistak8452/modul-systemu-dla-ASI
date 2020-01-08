@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface NotificationHistoryRepository extends JpaRepository<NotificationHistory, Long> {
 
-    List<NotificationHistory> findAllByNotificationIsLikeOrderByChangeDateTimeDesc(Notification notification);
+    List<NotificationHistory> findAllByNotificationIsLikeOrderByChangeDateTimeAsc(Notification notification);
 
     NotificationHistory findTopByNotificationIsLikeOrderByChangeNumberDesc(Notification notification);
 }

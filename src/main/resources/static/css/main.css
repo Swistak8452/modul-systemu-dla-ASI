@@ -20,3 +20,8 @@
 .nav-bar-background-color{
     background-color: #E5E5E5 !important;
 }
+
+.prepend-label{
+    background-color: #cbcaca;
+    border-radius: 5px!important;
+}
