@@ -5,15 +5,51 @@
 <head>
     <meta charset="UTF-8">
     <title>Nowe zdarzenie</title>
+    <script type="text/javascript" th:src="@{/js/validate/validate-notification.js}"></script>
 </head>
 <body>
 <div layout:fragment="content" th:remove="tag">
     <script th:if="${notificationsForLayout != 0}">
-        localStorage.setItem('notificationsAlert', true);
+        sessionStorage.setItem('notificationsAlert', true);
     </script>
     <script th:if="${tasksForLayout != 0}">
-        localStorage.setItem('tasksAlert', true);
+        sessionStorage.setItem('tasksAlert', true);
     </script>
+    <br>
+    <br>
+    <div class="jumbotron">
+        <h3 style="text-align: center">Nowe zdarzenie</h3>
+        <hr>
+        <form>
+            <div class="form-group">
+                <label for="notificationName">Nazwa zdarzenia:</label>
+                <input class="form-control" id="notificationName" style="width: 500px"
+                       placeholder="Wpisz nazwę zdarzenia.">
+                <div id="invalidNotificationName" class="invalid-feedback" style="display: none">
+                    Wpisz nazwę zdarzenia.
+                </div>
+            </div>
+            <hr>
+            <div class="form-group">
+                <label for="notificationDescription">Opis zdarzenia:</label>
+                <textarea class="form-control" id="notificationDescription" rows="3"
+                          placeholder="Wprowadź opis zdarzenia."></textarea>
+                <div id="invalidNotificationDescription" class="invalid-feedback" style="display: none">
+                    Wprowadź opis zdarzenia.
+                </div>
+            </div>
+            <hr>
+            <div style="text-align:center; height: 70px">
+                <a class="btn btn-primary" style="width: 300px; color: white" onclick="validateNotification();">Dodaj
+                    zdarzenie</a>
+                <span id="urlToSaveNotification" th:href="@{/notifications/save-notification}" style="display: none"></span>
+            </div>
+        </form>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
 </div>
 </body>
 </html>

@@ -10,22 +10,25 @@
 <body>
 <div layout:fragment="content" th:remove="tag">
     <script th:if="${notificationsForLayout != 0}">
-        localStorage.setItem('notificationsAlert', true);
+        sessionStorage.setItem('notificationsAlert', true);
     </script>
     <script th:if="${tasksForLayout != 0}">
-        localStorage.setItem('tasksAlert', true);
+        sessionStorage.setItem('tasksAlert', true);
     </script>
     <br>
     <br>
     <div class="jumbotron">
+        <h3 style="text-align: center">Nowe zadanie</h3>
+        <hr>
         <form>
             <div class="form-group">
                 <label for="taskName">Nazwa zadania:</label>
-                <input class="form-control" id="taskName" style="width: 500px">
+                <input class="form-control" id="taskName" style="width: 500px" placeholder="Wpisz nazwę zadania.">
                 <div id="invalidTaskName" class="invalid-feedback" style="display: none">
                     Wpisz nazwę zadania.
                 </div>
             </div>
+            <hr>
             <div class="form-group">
                 <label for="taskPriority">Wybierz priorytet zadania:</label>
                 <select class="form-control" id="taskPriority" style="width: auto">
@@ -38,6 +41,7 @@
                     Wybierz priorytet zadania.
                 </div>
             </div>
+            <hr>
             <div class="form-group">
                 <label for="taskType">Wybierz typ zadania:</label>
                 <select class="form-control" id="taskType" style="width: auto">
@@ -50,6 +54,7 @@
                     Wybierz typ zadania.
                 </div>
             </div>
+            <hr>
             <div class="form-group">
                 <label for="taskRelatedNotification">Wybierz powiązane zgłoszenie:</label>
                 <select class="form-control" id="taskRelatedNotification" style="width: auto">
@@ -63,6 +68,7 @@
                     Wybierz powiązane zgłoszenie z zadaniem.
                 </div>
             </div>
+            <hr>
             <div class="form-group">
                 <label for="taskAssignedPerson">Przypisz użytkownika:</label>
                 <select class="form-control" id="taskAssignedPerson" style="width: auto">
@@ -76,13 +82,15 @@
                     Przypisz osobę do zadania.
                 </div>
             </div>
+            <hr>
             <div class="form-group">
                 <label for="taskDescription">Opis zadania:</label>
-                <textarea class="form-control" id="taskDescription" rows="3"></textarea>
+                <textarea class="form-control" id="taskDescription" rows="3" placeholder="Wprowadź opis zadania."></textarea>
                 <div id="invalidTaskDescription" class="invalid-feedback" style="display: none">
                     Wprowadź opis zadania.
                 </div>
             </div>
+            <hr>
             <div class="form-group">
                 <label for="taskDeadline">Termin wykonania:</label>
                 <input class="form-control" id="taskDeadline" type="date"
@@ -91,6 +99,7 @@
                     Wybierz termin wykonania zadania.
                 </div>
             </div>
+            <hr>
             <div style="text-align:center; height: 70px">
                 <a class="btn btn-primary" style="width: 200px; color: white" onclick="validateTask();">Dodaj
                     zadanie</a>

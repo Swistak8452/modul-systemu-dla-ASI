@@ -9,11 +9,36 @@
 <body>
 <div layout:fragment="content" th:remove="tag">
     <script th:if="${notificationsForLayout != 0}">
-        localStorage.setItem('notificationsAlert', true);
+        sessionStorage.setItem('notificationsAlert', true);
     </script>
     <script th:if="${tasksForLayout != 0}">
-        localStorage.setItem('tasksAlert', true);
+        sessionStorage.setItem('tasksAlert', true);
     </script>
+    <br>
+    <br>
+    <br>
+    <div th:each="notification : ${notifications}">
+        <div class="card border-danger mb-3" style="background-color: #dfdfdf;">
+            <div class="card-header bg-transparent border-danger" style="text-align: center">
+                <span style="font-weight: bold">Utworzono:   </span>
+                <span th:text="${#dates.format(notification.date, 'dd-MM-yyyy HH:mm:ss')}"></span></div>
+            <div class="card-body text-danger">
+                <h5 class="card-title"><span th:text="${notification.name}"></span></h5>
+                <p class="card-text" th:text="${notification.description}"></p>
+            </div>
+            <div class="card-footer bg-transparent border-danger" style="text-align: center">
+                <p>
+                    <a th:notificationNumber="${notification.id}" class="btn btn-primary notification-details-button" style="width: 400px; color: white">Podgląd</a>
+                </p>
+                <p>
+                    <a th:notificationNumber="${notification.id}" class="btn btn-info notification-edit-button" style="width: 400px; color: white">Edycja</a>
+                </p>
+            </div>
+        </div>
+        <br>
+        <br>
+    </div>
+    <script type="text/javascript" th:src="@{/js/details/notification-details.js}"></script>
 </div>
 </body>
 </html>

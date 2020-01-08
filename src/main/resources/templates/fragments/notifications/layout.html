@@ -17,10 +17,10 @@
     <th:block layout:fragment="content"/>
 </div>
 <script>
-    if(localStorage.getItem('notificationsAlert')){
+    if(sessionStorage.getItem('notificationsAlert')){
         document.getElementById("notificationsAlert").style.display = 'inline-block';
     }
-    if(localStorage.getItem('tasksAlert')){
+    if(sessionStorage.getItem('tasksAlert')){
         document.getElementById("tasksAlert").style.display = 'inline-block';
     }
 </script>

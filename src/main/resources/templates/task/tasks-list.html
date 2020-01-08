@@ -9,10 +9,10 @@
 <body>
 <div layout:fragment="content" th:remove="tag">
     <script th:if="${notificationsForLayout != 0}">
-        localStorage.setItem('notificationsAlert', true);
+        sessionStorage.setItem('notificationsAlert', true);
     </script>
     <script th:if="${tasksForLayout != 0}">
-        localStorage.setItem('tasksAlert', true);
+        sessionStorage.setItem('tasksAlert', true);
     </script>
     <br>
     <br>
@@ -29,19 +29,19 @@
                         <li class="list-group-item">
                             <span style="font-weight: bold">Priorytet: </span>
                             <span th:switch="${tasks.get(r + c).priority.id}">
-                                <span th:case="1" style="color: #4ead2d">
+                                <span th:case="1" class="text-success" style="font-weight: bold">
                                     <span class="card-text" th:text="${tasks.get(r + c).priority.name}"></span>
                                 </span>
-                                <span th:case="2" style="color: #c4ac0d">
+                                <span th:case="2" class="text-info" style="font-weight: bold">
                                     <span class="card-text" th:text="${tasks.get(r + c).priority.name}"></span>
                                 </span>
-                                <span th:case="3" style="color: #cd8f3b">
+                                <span th:case="3" class="text-primary" style="font-weight: bold">
                                     <span class="card-text" th:text="${tasks.get(r + c).priority.name}"></span>
                                 </span>
-                                <span th:case="4" style="color: #cc491a">
+                                <span th:case="4" class="text-warning" style="font-weight: bold">
                                     <span class="card-text" th:text="${tasks.get(r + c).priority.name}"></span>
                                 </span>
-                                <span th:case="5" style="color: #cd0000">
+                                <span th:case="5" class="text-danger" style="font-weight: bold">
                                     <span class="card-text" th:text="${tasks.get(r + c).priority.name}"></span>
                                 </span>
                             </span>
@@ -67,7 +67,7 @@
                         </li>
                     </ul>
                     <div class="card-body" style="text-align:center; height: 70px" >
-                        <a th:id="${tasks.get(r + c).id}" class="btn btn-primary details-button" style="width: 200px">Podgląd</a>
+                        <a th:taskNumber="${tasks.get(r + c).id}" class="btn btn-primary task-details-button" style="width: 200px">Podgląd</a>
                     </div>
                 </div>
                 <br>
@@ -76,6 +76,7 @@
         </div>
     </th:block>
     <script type="text/javascript" th:src="@{/js/details/task-details.js}"></script>
+<!--    <script type="text/javascript" th:src="@{/js/task/task-priority.js}"></script>-->
 </div>
 </body>
 </html>

@@ -1,6 +1,7 @@
 package modul.systemu.asi.frontend.model;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.*;
 
 @Entity
@@ -8,7 +9,7 @@ import java.util.*;
 public class Notification {
     @Id
     @Column(unique = true, nullable = false)
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private Date date;
@@ -24,18 +25,26 @@ public class Notification {
     @OneToMany(mappedBy = "newRelatedNotification")
     private List<TaskHistory> taskHistoriesNewRelatedNotification = new ArrayList<TaskHistory>();
 
+    private Date returnDateNow() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Timestamp(cal.getTime().getTime()));
+        cal.add(Calendar.MINUTE, 60);
+        return new Date(cal.getTime().getTime());
+    }
+
     public Notification(){
         super();
+        this.date = returnDateNow();
         this.archived = false;
     }
 
-    public Notification(long id, String name, Date date, String description){
+    public Notification(String name, Date date, String description){
         super();
-        this.id = id;
         this.name = name;
         this.date = date;
         this.description = description;
         this.archived = false;
+        this.date = returnDateNow();
     }
 
     public List<TaskHistory> getTaskHistoriesPreviousRelatedNotification() {

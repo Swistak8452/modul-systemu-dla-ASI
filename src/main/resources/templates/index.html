@@ -5,16 +5,16 @@
 <head>
     <title>Strona główna</title>
     <script>
-        localStorage.clear();
+        sessionStorage.clear();
     </script>
 </head>
 <body>
 <div layout:fragment="content" th:remove="tag">
     <script th:if="${notificationsForLayout != 0}">
-        localStorage.setItem('notificationsAlert', true);
+        sessionStorage.setItem('notificationsAlert', true);
     </script>
     <script th:if="${tasksForLayout != 0}">
-        localStorage.setItem('tasksAlert', true);
+        sessionStorage.setItem('tasksAlert', true);
     </script>
     Główna!
 </div>

@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
 <body>
 <th:block th:fragment="header">
     <nav class="navbar navbar-expand-sm bg-light navbar-light nav-bar-background-color">
@@ -9,7 +10,7 @@
                 <a class="nav-link nav-bar-font-size" th:href="@{/}">Strona główna</a>
             </li>
             <span style="width: 20%"></span>
-            <li class="nav-item active" sec:authorize="hasRole('USER')">
+            <li class="nav-item" sec:authorize="hasRole('USER')">
                 <a id="tasksLabel" class="nav-link nav-bar-font-size" th:href="@{/tasks/current-tasks-list}" style="display:inline-block;">Zadania</a>
                 <ion-icon id="tasksAlert" name="alert" style="color: red; display: none"></ion-icon>
             </li>
@@ -19,7 +20,7 @@
                 <ion-icon id="notificationsAlert" name="alert" style="color: red; display: none;"></ion-icon>
             </li>
             <li class="nav-item" sec:authorize="hasRole('USER')" style="position: absolute; top: 8px; right: 10%;">
-                <a class="nav-link nav-bar-font-size nav-bar-logout" th:href="@{/logout}" onclick='localStorage.clear();'>Wyloguj</a>
+                <a class="nav-link nav-bar-font-size nav-bar-logout" th:href="@{/logout}" onclick='sessionStorage.clear();'>Wyloguj</a>
             </li>
         </ul>
     </nav>

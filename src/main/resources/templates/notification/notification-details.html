@@ -8,7 +8,26 @@
 </head>
 <body>
 <div layout:fragment="content" th:remove="tag">
-
+    <br>
+    <br>
+    <div class="jumbotron">
+        <h1 class="display-4" style="text-align: center;" th:text="${notification.name}"></h1>
+        <hr class="my-4">
+        <p style="text-align: center">
+            <span style="font-weight: bold">Utworzono: </span>
+            <span th:text="${#dates.format(notification.date, 'dd-MM-yyyy HH:mm:ss')}"></span>
+        </p>
+        <hr class="my-4">
+        <label for="notificationDescription" style="font-weight: bold">Opis zdarzenia:</label>
+        <p class="lead">
+            <span id="notificationDescription" th:text="${notification.description}"></span>
+        </p>
+        <hr class="my-4">
+        <div style="text-align:center; height: 70px">
+            <a class="btn btn-success btn-lg" id="notification-history-button" role="button" style="width: 400px">Historia zdarzenia</a>
+        </div>
+    </div>
+    <script type="text/javascript" th:src="@{/js/history/notification-history.js}"></script>
 </div>
 </body>
 </html>

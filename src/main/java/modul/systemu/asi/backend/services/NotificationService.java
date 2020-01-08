@@ -24,9 +24,9 @@ public class NotificationService {
     UserRepository userRepository;
 
     public void addNewNotification(Notification notification, String editorsEmail){
-        User user = userRepository.findByEmail(editorsEmail);
+        //User user = userRepository.findByEmail(editorsEmail);
         notificationRepository.save(notification);
-        addNewNotificationHistory(notification, user);
+        //addNewNotificationHistory(notification, user);
     }
 
     public void updateNotification(Notification notification, String editorsEmail){

@@ -40,12 +40,12 @@ public class NotificationController {
         model.addAttribute("notifications", notificationService.getAllArchivedNotifications());
         model.addAttribute("notificationsForLayout", notificationService.getAllActiveNotifications().size());
         model.addAttribute("tasksForLayout", taskService.getAllActiveTasks().size());
-        return "notification/archived-notifications";
+        return "notification/notification-list";
     }
 
     @RequestMapping("/notifications/notification-details")
     public String notificationDetails(WebRequest request, Model model, @RequestParam long notificationId) {
-        model.addAttribute("notificationDetails", notificationService.getNotificationById(notificationId));
+        model.addAttribute("notification", notificationService.getNotificationById(notificationId));
         return "notification/notification-details";
     }
 
