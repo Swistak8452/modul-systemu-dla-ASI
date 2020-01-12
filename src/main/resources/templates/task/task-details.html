@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:th="http://www.thymeleaf.org"
+      xmlns:th="http://www.thymeleaf.org" xmlns:width="http://www.w3.org/1999/xhtml"
       layout:decorate="~{fragments/tasks/layout}">
 <head>
     <meta charset="UTF-8">
     <title>Szczegóły Zadania</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/comment/main.css}"/>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 </head>
 <body>
 <div layout:fragment="content" th:remove="tag">
@@ -45,25 +47,33 @@
                                 </span>
                             </span>
         </p>
+        <hr class="my-4" th:if="${task.assignedPerson != null}">
         <span th:if="${task.assignedPerson != null}">
-            <hr class="my-4">
             <p>
                 <span style="font-weight: bold">Osoba przypisana: </span><span
                     th:text="${task.assignedPerson.email}"></span>
+                    <span>
+                        <a class="btn btn-primary btn-sm" id="assignedPerson" style="float: right;margin-right: 150px;">Zmień</a>
+                    </span>
             </p>
-            </span>
+        </span>
+        <hr class="my-4" th:if="${task.relatedNotification != null}">
         <span th:if="${task.relatedNotification != null}">
-                <hr class="my-4">
                 <p>
-                    <span style="font-weight: bold">Powiązane zgłoszenie: </span><a th:text="${task.relatedNotification.name}"></a>
+                    <span style="font-weight: bold">Powiązane zgłoszenie: </span><span
+                        th:text="${task.relatedNotification.name}"></span>
+                    <span>
+                        <a class="btn btn-warning btn-sm" id="relatedNotificationLink"
+                           style="float: right;margin-right: 150px;"
+                           th:relatedNotificationId="${task.relatedNotification.id}">Przejdź do zgłoszenia</a>
+                    </span>
                 </p>
-            </span>
+        </span>
         <hr class="my-4">
         <p>
             <span style="font-weight: bold">Opis: </span><span
                 th:text="${task.description}"></span>
         </p>
-        </span>
         <hr class="my-4">
         <span th:switch="${task.archived}">
                                 <div th:case="true" style="background-color: #f48b71;height: 50px;text-align: center;">
@@ -81,14 +91,42 @@
             </span>
         <hr class="my-4">
         <div style="text-align:center; height: 70px">
-            <a class="btn btn-primary btn-lg" id="edit-button" role="button" style="width: 200px">Edytuj</a>
+            <a class="btn btn-primary btn-lg" id="edit-button" role="button" style="width: 30%">Edytuj</a>
+            <span style="width: 5%"></span>
+            <a class="btn btn-success btn-lg" id="task-history-button" role="button" style="width: 30%">Historia
+                zadania</a>
+            <span style="width: 5%"></span>
+            <a class="btn btn-danger btn-lg" role="button" onclick="changeTask()" style="width: 30%; color: white;">
+                <span th:if="${task.archived == false}">Zarchiwizuj</span>
+                <span th:if="${task.archived == true}">Przywróć</span>
+            </a>
         </div>
-        <hr class="my-4">
-        <div style="text-align:center; height: 70px">
-            <a class="btn btn-success btn-lg" id="task-history-button" role="button" style="width: 400px">Historia zadania</a>
+        <div class="comments" th:each="comment: ${comments}">
+            <div class="row">
+                <div class="col-sm-1">
+                    <div class="thumbnail">
+                        <img class="img-responsive user-photo" th:src="@{/images/user_picture.png}">
+                    </div>
+                </div>
+                <div class="col-sm-5">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <strong th:text="${comment.user.email}"></strong> <span class="text-muted" th:text="${#dates.format(comment.date, 'dd-MM-yyyy HH:mm')}"></span>
+                        </div>
+                        <div class="panel-body" th:text="${comment.text}">
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+        <br>
+        <a class="btn btn-secondary btn-lg" id="add-comment" role="button" style="width: 30%">Dodaj komentarz</a>
     </div>
+    <script type="text/javascript" th:src="@{/js/task/task-details-set-related-notification.js}"></script>
+    <script type="text/javascript" th:src="@{/js/task/task-details-change-assigned-person.js}"></script>
     <script type="text/javascript" th:src="@{/js/update/update-task.js}"></script>
+    <script type="text/javascript" th:src="@{/js/archived/archived-object.js}"></script>
+    <script type="text/javascript" th:src="@{/js/comment/genetate-link-to-add-comment.js}"></script>
 </div>
 </body>
 </html>

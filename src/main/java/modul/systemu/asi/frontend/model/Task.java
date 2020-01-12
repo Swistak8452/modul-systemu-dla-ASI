@@ -34,6 +34,8 @@ public class Task {
     private Date deadline;
     private boolean archived;
     @OneToMany(mappedBy = "task")
+    private List<Comment> comments = new ArrayList<Comment>();
+    @OneToMany(mappedBy = "task")
     private List<TaskHistory> taskHistories = new ArrayList<TaskHistory>();
 
     public Task(){
@@ -53,6 +55,19 @@ public class Task {
         this.relatedNotification = relatedNotification;
         this.deadline = deadline;
         this.archived = archived;
+    }
+
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 
     public List<TaskHistory> getTaskHistories() {

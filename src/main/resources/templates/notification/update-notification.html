@@ -43,7 +43,8 @@
             </div>
             <hr>
             <div style="text-align:center; height: 70px">
-                <a class="btn btn-primary" style="width: 300px; color: white" onclick="validateUpdatedNotification();">Zaktualizuj
+                <a class="btn btn-primary" onclick="window.history.back();" style="width: 200px; color: white;" role="button">Wstecz</a>
+                <a class="btn btn-warning" style="width: 300px; color: white" onclick="validateUpdatedNotification();">Zaktualizuj
                     zdarzenie</a>
                 <span id="urlToSaveUpdatedNotification" th:href="@{/notifications/save-updated-notification}"
                       style="display: none"></span>

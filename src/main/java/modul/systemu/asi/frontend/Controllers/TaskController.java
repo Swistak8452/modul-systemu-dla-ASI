@@ -1,9 +1,6 @@
 package modul.systemu.asi.frontend.Controllers;
 
-import modul.systemu.asi.backend.dao.PriorityRepository;
-import modul.systemu.asi.backend.dao.StatusRepository;
-import modul.systemu.asi.backend.dao.TypeRepository;
-import modul.systemu.asi.backend.dao.UserRepository;
+import modul.systemu.asi.backend.dao.*;
 import modul.systemu.asi.backend.services.NotificationService;
 import modul.systemu.asi.backend.services.TaskService;
 import modul.systemu.asi.frontend.model.Task;
@@ -38,6 +35,9 @@ public class TaskController {
 
     @Autowired
     private TypeRepository typeRepository;
+
+    @Autowired
+    private CommentRepository commentRepository;
 
     @RequestMapping("/tasks/current-tasks-list")
     public String taskList(WebRequest request, Model model) {
@@ -77,13 +77,16 @@ public class TaskController {
 
     @RequestMapping("/tasks/assign-task")
     public String assignTask(WebRequest request, Model model, @RequestParam long taskId) {
+        model.addAttribute("users", userRepository.findAll());
         model.addAttribute("task", taskService.getTaskById(taskId));
         return "task/assign-task";
     }
 
     @RequestMapping("/tasks/task-details")
     public String taskDetails(WebRequest request, Model model, @RequestParam long taskId) {
-        model.addAttribute("task", taskService.getTaskById(taskId));
+        Task task = taskService.getTaskById(taskId);
+        model.addAttribute("task", task);
+        model.addAttribute("comments", commentRepository.findAllByTaskOrderByDateAsc(task));
         return "task/task-details";
     }
 
@@ -104,5 +107,11 @@ public class TaskController {
         model.addAttribute("notifications", notificationService.getAllActiveNotifications());
         model.addAttribute("task", taskService.getTaskById(taskId));
         return "task/update-task";
+    }
+
+    @RequestMapping("/tasks/add-comment")
+    public String addCommentToTask(WebRequest request, Model model, @RequestParam long taskId) {
+        model.addAttribute("task", taskService.getTaskById(taskId));
+        return "task/add-comment";
     }
 }

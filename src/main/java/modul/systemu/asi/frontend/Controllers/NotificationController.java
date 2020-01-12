@@ -1,5 +1,6 @@
 package modul.systemu.asi.frontend.Controllers;
 
+import modul.systemu.asi.backend.dao.CommentRepository;
 import modul.systemu.asi.backend.services.NotificationService;
 import modul.systemu.asi.backend.services.TaskService;
 import modul.systemu.asi.frontend.model.Notification;
@@ -18,6 +19,9 @@ public class NotificationController {
 
     @Autowired
     private TaskService taskService;
+
+    @Autowired
+    private CommentRepository commentRepository;
 
     @RequestMapping("/notifications/notification-list")
     public String notificationList(WebRequest request, Model model) {
@@ -45,7 +49,9 @@ public class NotificationController {
 
     @RequestMapping("/notifications/notification-details")
     public String notificationDetails(WebRequest request, Model model, @RequestParam long notificationId) {
-        model.addAttribute("notification", notificationService.getNotificationById(notificationId));
+        Notification notification = notificationService.getNotificationById(notificationId);
+        model.addAttribute("notification", notification);
+        model.addAttribute("comments", commentRepository.findAllByNotificationOrderByDateAsc(notification));
         return "notification/notification-details";
     }
 
@@ -60,5 +66,11 @@ public class NotificationController {
     public String updateNotification(WebRequest request, Model model, @RequestParam long notificationId) {
         model.addAttribute("notification", notificationService.getNotificationById(notificationId));
         return "notification/update-notification";
+    }
+
+    @RequestMapping("/notifications/add-comment")
+    public String addCommentToNotification(WebRequest request, Model model, @RequestParam long notificationId) {
+        model.addAttribute("notification", notificationService.getNotificationById(notificationId));
+        return "notification/add-comment";
     }
 }

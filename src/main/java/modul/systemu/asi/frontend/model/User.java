@@ -18,6 +18,8 @@ public class User {
     private String function;
     @Column(unique = true, nullable = false)
     private String email;
+    @OneToMany(mappedBy = "user")
+    private List<Comment> comments = new ArrayList<Comment>();
     @OneToMany(mappedBy = "editedBy")
     private List<NotificationHistory> notificationHistories = new ArrayList<NotificationHistory>();
     @OneToMany(mappedBy = "assignedPerson")
@@ -39,6 +41,14 @@ public class User {
         this.lastName = lastName;
         this.function = function;
         this.email = email;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 
     public List<TaskHistory> getTaskHistoriesEditedBy() {

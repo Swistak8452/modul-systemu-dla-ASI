@@ -1,12 +1,11 @@
 package modul.systemu.asi.backend.clients;
 
-import modul.systemu.asi.backend.dao.PriorityRepository;
-import modul.systemu.asi.backend.dao.StatusRepository;
-import modul.systemu.asi.backend.dao.TypeRepository;
-import modul.systemu.asi.backend.dao.UserRepository;
+import modul.systemu.asi.backend.dao.*;
 import modul.systemu.asi.backend.services.NotificationService;
 import modul.systemu.asi.backend.services.TaskService;
+import modul.systemu.asi.frontend.model.Comment;
 import modul.systemu.asi.frontend.model.Task;
+import modul.systemu.asi.frontend.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -37,6 +36,9 @@ public class TaskClient {
 
     @Autowired
     private TypeRepository typeRepository;
+
+    @Autowired
+    private CommentRepository commentRepository;
 
     @GetMapping("/tasks/save-task")
     public String saveTask(@RequestParam(defaultValue = "-1") long id,
@@ -108,6 +110,40 @@ public class TaskClient {
         task.setStatus(statusRepository.findById(statusId));
         task.setType(typeRepository.findById(typeId));
         taskService.updateTask(task, editorsEmail, taskId);
+        return "task/save-task";
+    }
+
+    @GetMapping("/tasks/change-field-archived-in-task")
+    public String saveUpdatedTask(@RequestParam long taskId,
+                                  @RequestParam String editorsEmail) {
+        Task task = taskService.getTaskById(taskId);
+        boolean isArchived = task.isArchived();
+        task.setArchived(!isArchived);
+        taskService.updateTask(task, editorsEmail, taskId);
+        return "task/save-task";
+    }
+
+    @GetMapping("/tasks/assign-user-to-task")
+    public String saveUpdatedTask(@RequestParam long taskId,
+                                  @RequestParam String editorsEmail,
+                                  @RequestParam long assignedPersonId) {
+        Task task = taskService.getTaskById(taskId);
+        task.setAssignedPerson(userRepository.findById(assignedPersonId));
+        taskService.updateTask(task, editorsEmail, taskId);
+        return "task/save-task";
+    }
+
+    @GetMapping("/tasks/add-comment-to-task")
+    public String saveUpdatedTask(@RequestParam long taskId,
+                                  @RequestParam String editorsEmail,
+                                  @RequestParam String text) {
+        Task task = taskService.getTaskById(taskId);
+        User user = userRepository.findByEmail(editorsEmail);
+        Comment comment = new Comment();
+        comment.setTask(task);
+        comment.setUser(user);
+        comment.setText(text);
+        commentRepository.save(comment);
         return "task/save-task";
     }
 }

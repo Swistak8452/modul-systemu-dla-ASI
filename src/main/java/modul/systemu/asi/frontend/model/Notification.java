@@ -17,6 +17,8 @@ public class Notification {
     private String description;
     private boolean archived;
     @OneToMany(mappedBy = "notification")
+    private List<Comment> comments = new ArrayList<Comment>();
+    @OneToMany(mappedBy = "notification")
     private List<NotificationHistory> notificationHistories = new ArrayList<NotificationHistory>();
     @OneToMany(mappedBy = "relatedNotification")
     private List<Task> tasks = new ArrayList<Task>();
@@ -45,6 +47,14 @@ public class Notification {
         this.description = description;
         this.archived = false;
         this.date = returnDateNow();
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 
     public List<TaskHistory> getTaskHistoriesPreviousRelatedNotification() {

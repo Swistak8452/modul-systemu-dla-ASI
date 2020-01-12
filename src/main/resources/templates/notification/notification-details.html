@@ -5,6 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Szczegóły Zgłoszenia</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/comment/main.css}"/>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 </head>
 <body>
 <div layout:fragment="content" th:remove="tag">
@@ -18,16 +20,57 @@
             <span th:text="${#dates.format(notification.date, 'dd-MM-yyyy HH:mm:ss')}"></span>
         </p>
         <hr class="my-4">
+        <span th:switch="${notification.archived}">
+                                <div th:case="true" style="background-color: #f48b71;height: 50px;text-align: center;">
+                                        <p style="position: relative; float: left; top: 50%;
+                                        left: 50%; transform: translate(-50%, -50%);font-weight: bold;">
+                                            Zarchiwizowano
+                                        </p>
+                                </div>
+                                <div th:case="false" style="background-color: #a8f47a;height: 50px;text-align: center;">
+                                        <p style="position: relative; float: left; top: 50%;
+                                        left: 50%; transform: translate(-50%, -50%);font-weight: bold;">
+                                            Zdarzenie aktywne
+                                        </p>
+                                </div>
+            </span>
+        <hr class="my-4">
         <label for="notificationDescription" style="font-weight: bold">Opis zdarzenia:</label>
         <p class="lead">
             <span id="notificationDescription" th:text="${notification.description}"></span>
         </p>
         <hr class="my-4">
         <div style="text-align:center; height: 70px">
-            <a class="btn btn-success btn-lg" id="notification-history-button" role="button" style="width: 400px">Historia zdarzenia</a>
+            <a class="btn btn-success btn-lg" id="notification-history-button" role="button" style="width: 350px">Historia zdarzenia</a>
+            <a class="btn btn-danger btn-lg" role="button" onclick="changeNotification()" style="width: 350px; color: white;">
+                <span th:if="${notification.archived == false}">Zarchiwizuj</span>
+                <span th:if="${notification.archived == true}">Przywróć</span>
+            </a>
         </div>
+        <div class="comments" th:each="comment: ${comments}">
+            <div class="row">
+                <div class="col-sm-1">
+                    <div class="thumbnail">
+                        <img class="img-responsive user-photo" th:src="@{/images/user_picture.png}">
+                    </div>
+                </div>
+                <div class="col-sm-5">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <strong th:text="${comment.user.email}"></strong> <span class="text-muted" th:text="${#dates.format(comment.date, 'dd-MM-yyyy HH:mm')}"></span>
+                        </div>
+                        <div class="panel-body" th:text="${comment.text}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <a class="btn btn-secondary btn-lg" id="add-comment" role="button" style="width: 30%">Dodaj komentarz</a>
     </div>
     <script type="text/javascript" th:src="@{/js/history/notification-history.js}"></script>
+    <script type="text/javascript" th:src="@{/js/archived/archived-object.js}"></script>
+    <script type="text/javascript" th:src="@{/js/comment/genetate-link-to-add-comment.js}"></script>
 </div>
 </body>
 </html>

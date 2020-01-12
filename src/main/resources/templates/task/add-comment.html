@@ -4,7 +4,8 @@
       layout:decorate="~{fragments/tasks/layout}">
 <head>
     <meta charset="UTF-8">
-    <title>Przypisz Zadanie</title>
+    <title>Dodanie komentarza</title>
+    <script type="text/javascript" th:src="@{/js/validate/validate-comment.js}"></script>
 </head>
 <body>
 <div layout:fragment="content" th:remove="tag">
@@ -13,21 +14,19 @@
     <div class="jumbotron"><h1 class="display-4" style="text-align: center;font-size: 30px">
         <span style="font-weight: bold">Nazwa zadania: </span><span th:text="${task.name}"></span></h1>
         <hr class="my-4">
-        <label for="taskAssignedPerson">Przypisz użytkownika:</label>
-        <select class="form-control" id="taskAssignedPerson" style="width: auto">
-            <option th:each="user : ${users}"
-                    th:value="${user.id}"
-                    th:text="${user.email}"
-                    th:selected="${task.assignedPerson.id}">
-            </option>
-        </select>
+        <div class="form-group">
+            <label for="commentText">Dodaj komentarz:</label>
+            <textarea class="form-control" id="commentText" rows="3" placeholder="Wprowadź treść komentarza."></textarea>
+            <div id="invalidCommentText" class="invalid-feedback" style="display: none">
+                Wprowadź treść komentarza.
+            </div>
+        </div>
         <hr class="my-4">
         <div style="text-align:center; height: 70px">
             <a class="btn btn-primary" onclick="window.history.back();" style="width: 200px; color: white;" role="button">Wstecz</a>
-            <a class="btn btn-warning" style="width: 200px; color: white" onclick="assignUserToTask();">Przypisz</a>
+            <a class="btn btn-warning" style="width: 200px; color: white" onclick="validateComment();">Dodaj</a>
         </div>
     </div>
-    <script type="text/javascript" th:src="@{/js/assign/assign-task.js}"></script>
 </div>
 </body>
 </html>
