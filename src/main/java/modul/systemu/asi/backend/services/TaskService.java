@@ -36,7 +36,7 @@ public class TaskService {
         addNewTaskHistory(task, user);
     }
 
-    public void updateTask(Task task, String editorsEmail, long taskId){
+    public void updateTask(Task task, String editorsEmail){
         User user = userRepository.findByEmail(editorsEmail);
         taskRepository.save(task);
         addNewTaskHistory(task, user);
@@ -48,8 +48,6 @@ public class TaskService {
     }
 
     public List<TaskHistory> getTaskHistory(Task task){
-        //Task temporatyTask = new Task();
-        //task.setId(id);
         List<TaskHistory> taskHistories = taskHistoryRepository.findAllByTaskIsLikeOrderByChangeDateTimeAsc(task);
         return taskHistories;
     }

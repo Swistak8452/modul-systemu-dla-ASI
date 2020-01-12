@@ -16,7 +16,8 @@ $(document).ready(function checkDifferences() {
             $(this).find('.row-priority td').last().css("color", "red");
         }
         if($(this).find('.row-assigned-person td').first().text() != $(this).find('.row-assigned-person td').last().text()){
-            $(this).find('.row-assigned-person td').last().css("color", "red");
+            $(this).find('.row-assigned-person td').last(
+            ).css("color", "red");
         }
         if($(this).find('.row-related-notification td').first().text() != $(this).find('.row-related-notification td').last().text()){
             $(this).find('.row-related-notification td').last().css("color", "red");

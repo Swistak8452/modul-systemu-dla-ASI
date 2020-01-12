@@ -16,7 +16,17 @@
     <script th:if="${tasksForLayout != 0}">
         sessionStorage.setItem('tasksAlert', true);
     </script>
-
+    <br>
+    <br>
+    <h3 style="font-size: 36px"><span>Witaj, </span><span th:text="${user.firstName}"></span><span> </span><span th:text="${user.lastName}"></span>!</h3>
+    <br>
+    <p style="font-size: 20px">Masz <span style="font-weight: bold" th:text="${tasksForLayout}"></span> <a th:href="@{/tasks/current-tasks-list}">zadań</a> do wykonania.</p>
+    <br>
+    <p style="font-size: 20px">Należy obsłużyć jeszcze <span style="font-weight: bold" th:text="${notificationsForLayout}"></span> <a th:href="@{/notifications/notification-list}">zdarzeń</a>.</p>
+    <div style="margin-top: 40%; font-size: 13px">
+        <p>Wszelkie błędy prosimy zgłaszać do naszego supportu poprzez email: <i>kontakt@support.aplikacji.pl</i></p>
+        <p>Życzymy miłego dnia.</p>
+    </div>
 </div>
 </body>
 </html>

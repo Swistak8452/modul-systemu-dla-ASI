@@ -109,7 +109,7 @@ public class TaskClient {
         task.setRelatedNotification(notificationService.getNotificationById(relatedNotificationId));
         task.setStatus(statusRepository.findById(statusId));
         task.setType(typeRepository.findById(typeId));
-        taskService.updateTask(task, editorsEmail, taskId);
+        taskService.updateTask(task, editorsEmail);
         return "task/save-task";
     }
 
@@ -119,7 +119,7 @@ public class TaskClient {
         Task task = taskService.getTaskById(taskId);
         boolean isArchived = task.isArchived();
         task.setArchived(!isArchived);
-        taskService.updateTask(task, editorsEmail, taskId);
+        taskService.updateTask(task, editorsEmail);
         return "task/save-task";
     }
 
@@ -129,7 +129,7 @@ public class TaskClient {
                                   @RequestParam long assignedPersonId) {
         Task task = taskService.getTaskById(taskId);
         task.setAssignedPerson(userRepository.findById(assignedPersonId));
-        taskService.updateTask(task, editorsEmail, taskId);
+        taskService.updateTask(task, editorsEmail);
         return "task/save-task";
     }
 
