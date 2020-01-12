@@ -30,6 +30,8 @@ public class TaskHistory {
     private String newName;
     private Date previousDeadline;
     private Date newDeadline;
+    private boolean previousArchived;
+    private boolean newArchived;
     @ManyToOne
     @JoinColumn(name = "fk_previous_type")
     private Type previousType;
@@ -75,6 +77,7 @@ public class TaskHistory {
     public TaskHistory(Task task, User editedBy, long changeNumber,
                        User previousAssignedPerson, User newAssignedPerson,
                        String previousName, String newName, Date previousDeadline, Date newDeadline,
+                       boolean previousArchived, boolean newArchived,
                        Type previousType, Type newType, Status previousStatus, Status newStatus,
                        Priority previousPriority, Priority newPriority,
                        String previousDescription, String newDescription,
@@ -87,6 +90,8 @@ public class TaskHistory {
         this.newName = newName;
         this.previousDeadline = previousDeadline;
         this.newDeadline = newDeadline;
+        this.previousArchived = previousArchived;
+        this.newArchived = newArchived;
         this.previousType = previousType;
         this.newType = newType;
         this.previousStatus = previousStatus;
@@ -98,6 +103,22 @@ public class TaskHistory {
         this.previousRelatedNotification = previousRelatedNotification;
         this.newRelatedNotification = newRelatedNotification;
         this.changeDateTime = returnDateNow();
+    }
+
+    public boolean isPreviousArchived() {
+        return previousArchived;
+    }
+
+    public void setPreviousArchived(boolean previousArchived) {
+        this.previousArchived = previousArchived;
+    }
+
+    public boolean isNewArchived() {
+        return newArchived;
+    }
+
+    public void setNewArchived(boolean newArchived) {
+        this.newArchived = newArchived;
     }
 
     public long getId() {

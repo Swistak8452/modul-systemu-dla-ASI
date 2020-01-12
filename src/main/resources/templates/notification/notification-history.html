@@ -5,6 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Historia Zdarzenia</title>
+    <script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
+    <script type="text/javascript" th:src="@{/js/notification/check-differences.js}"></script>
 </head>
 <body>
 <div layout:fragment="content" th:remove="tag">
@@ -14,7 +16,7 @@
         <h1 class="display-4" style="text-align: center;font-size: 30px"><span style="font-weight: bold">Nazwa zgłoszenia: </span><span
                 th:text="${notification.name}"></span></h1>
     </div>
-    <div class="jumbotron" th:each="history: ${notificationHistory}">
+    <div class="jumbotron change" th:each="history: ${notificationHistory}">
         <br>
         <table class="table table-striped">
             <thead>
@@ -52,17 +54,24 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
+            <tr class="row-name">
                 <th scope="row">Nazwa zgłoszenia:</th>
                 <td th:text="${history.previousName}"></td>
                 <td th:text="${history.newName}"></td>
             </tr>
-            <tr>
+            <tr class="row-description">
                 <th scope="row">Opis:</th>
                 <td th:if="${history.previousDescription == null}">------</td>
                 <td th:if="${history.previousDescription != null}"
                     th:text="${history.previousDescription}"></td>
                 <td th:text="${history.newDescription}"></td>
+            </tr>
+            <tr class="row-archived">
+                <th scope="row">Archiwizacja:</th>
+                <td th:if="${history.previousArchived == true}">Zarchiwizowane</td>
+                <td th:if="${history.previousArchived == false}">Aktywne</td>
+                <td th:if="${history.newArchived == true}">Zarchiwizowane</td>
+                <td th:if="${history.newArchived == false}">Aktywne</td>
             </tr>
             </tbody>
         </table>

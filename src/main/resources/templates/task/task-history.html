@@ -5,6 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Historia Zadania</title>
+    <script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
+    <script type="text/javascript" th:src="@{/js/task/check-differences.js}"></script>
 </head>
 <body>
 <div layout:fragment="content" th:remove="tag">
@@ -13,7 +15,7 @@
     <div class="jumbotron" style="background-color: #75b8f4">
         <h1 class="display-4" style="text-align: center;font-size: 30px"><span style="font-weight: bold">Nazwa zadania: </span><span th:text="${task.name}"></span></h1>
     </div>
-    <div class="jumbotron" th:each="taskHistory: ${taskHistories}">
+    <div class="jumbotron change" th:each="taskHistory: ${taskHistories}">
         <br>
         <table class="table table-striped">
             <thead>
@@ -50,56 +52,63 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
+            <tr class="row-name">
                 <th scope="row">Nazwa zadania:</th>
                 <td th:text="${taskHistory.previousName}"></td>
                 <td th:text="${taskHistory.newName}"></td>
             </tr>
-            <tr>
+            <tr class="row-type">
                 <th scope="row">Typ zadania:</th>
                 <td th:if="${taskHistory.previousType == null}">------</td>
                 <td th:if="${taskHistory.previousType != null}" th:text="${taskHistory.previousType.name}"></td>
                 <td th:text="${taskHistory.newType.name}"></td>
             </tr>
-            <tr>
+            <tr class="row-status">
                 <th scope="row">Status:</th>
                 <td th:if="${taskHistory.previousStatus == null}">------</td>
                 <td th:if="${taskHistory.previousStatus != null}" th:text="${taskHistory.previousStatus.name}"></td>
                 <td th:text="${taskHistory.newStatus.name}"></td>
             </tr>
-            <tr>
+            <tr class="row-deadline">
                 <th scope="row">Termin wykonania:</th>
                 <td th:if="${taskHistory.previousDeadline == null}">------</td>
                 <td th:if="${taskHistory.previousDeadline != null}"
                     th:text="${#dates.format(taskHistory.previousDeadline, 'dd-MM-yyyy')}"></td>
                 <td th:text="${#dates.format(taskHistory.newDeadline, 'dd-MM-yyyy')}"></td>
             </tr>
-            <tr>
+            <tr class="row-priority">
                 <th scope="row">Priorytet:</th>
                 <td th:if="${taskHistory.previousPriority == null}">------</td>
                 <td th:if="${taskHistory.previousPriority != null}" th:text="${taskHistory.previousPriority.name}"></td>
                 <td th:text="${taskHistory.newPriority.name}"></td>
             </tr>
-            <tr>
+            <tr class="row-assigned-person">
                 <th scope="row">Osoba przypisana:</th>
                 <td th:if="${taskHistory.previousAssignedPerson == null}">------</td>
                 <td th:if="${taskHistory.previousAssignedPerson != null}"
                     th:text="${taskHistory.previousAssignedPerson.email}"></td>
                 <td th:text="${taskHistory.newAssignedPerson.email}"></td>
             </tr>
-            <tr>
+            <tr class="row-related-notification">
                 <th scope="row">Powiązane zgloszenie:</th>
                 <td th:if="${taskHistory.previousRelatedNotification == null}">------</td>
                 <td th:if="${taskHistory.previousRelatedNotification != null}"
                     th:text="${taskHistory.previousRelatedNotification.name}"></td>
                 <td th:text="${taskHistory.newRelatedNotification.name}"></td>
             </tr>
-            <tr>
+            <tr class="row-description">
                 <th scope="row">Opis:</th>
                 <td th:if="${taskHistory.previousDescription == null}">------</td>
                 <td th:if="${taskHistory.previousDescription != null}"
                     th:text="${taskHistory.previousDescription}"></td>
                 <td th:text="${taskHistory.newDescription}"></td>
+            </tr>
+            <tr class="row-archived">
+                <th scope="row">Archiwizacja:</th>
+                <td th:if="${taskHistory.previousArchived == true}">Zarchiwizowane</td>
+                <td th:if="${taskHistory.previousArchived == false}">Aktywne</td>
+                <td th:if="${taskHistory.newArchived == true}">Zarchiwizowane</td>
+                <td th:if="${taskHistory.newArchived == false}">Aktywne</td>
             </tr>
             </tbody>
         </table>

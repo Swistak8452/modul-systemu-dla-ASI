@@ -89,6 +89,7 @@ public class TaskService {
             taskHistory.setChangeNumber(0l);
             taskHistory.setPreviousAssignedPerson(null);
             taskHistory.setPreviousDeadline(null);
+            taskHistory.setPreviousArchived(false);
             taskHistory.setPreviousDescription(null);
             taskHistory.setPreviousName(null);
             taskHistory.setPreviousPriority(null);
@@ -99,6 +100,7 @@ public class TaskService {
             taskHistory.setChangeNumber(previousTaskHistory.getChangeNumber()+1);
             taskHistory.setPreviousAssignedPerson(previousTaskHistory.getNewAssignedPerson());
             taskHistory.setPreviousDeadline(previousTaskHistory.getNewDeadline());
+            taskHistory.setPreviousArchived(previousTaskHistory.isNewArchived());
             taskHistory.setPreviousDescription(previousTaskHistory.getNewDescription());
             taskHistory.setPreviousName(previousTaskHistory.getNewName());
             taskHistory.setPreviousPriority(previousTaskHistory.getNewPriority());
@@ -108,6 +110,7 @@ public class TaskService {
         }
         taskHistory.setNewAssignedPerson(task.getAssignedPerson());
         taskHistory.setNewDeadline(task.getDeadline());
+        taskHistory.setNewArchived(task.isArchived());
         taskHistory.setNewDescription(task.getDescription());
         taskHistory.setNewName(task.getName());
         taskHistory.setNewPriority(task.getPriority());

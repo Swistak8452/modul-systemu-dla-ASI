@@ -23,7 +23,6 @@ function saveComment(commentTextValue) {
     var text = commentTextValue;
     var taskId = new URL(document.URL).searchParams.get("taskId");
     var notificationId = new URL(document.URL).searchParams.get("notificationId");
-    var xhr = new XMLHttpRequest();
     var getMethodUrl;
     if(notificationId == null && taskId != null) {
         var xhr = new XMLHttpRequest();
