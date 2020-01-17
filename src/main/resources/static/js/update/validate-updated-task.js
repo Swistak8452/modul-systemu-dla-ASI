@@ -113,7 +113,6 @@ function saveTask(taskNameValue, taskPriorityValue, taskTypeValue, taskRelatedNo
     getMethodUrl += "&typeId=" + taskTypeValue;
     getMethodUrl += "&editorsEmail=" + editedBy;
     getMethodUrl += "&taskId=" + new URL(document.URL).searchParams.get("taskId");
-    //console.log(getMethodUrl);
     var xhr = new XMLHttpRequest();
     xhr.open("GET", getMethodUrl, true);
     xhr.onreadystatechange = function(){
