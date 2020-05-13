@@ -44,34 +44,37 @@ public class TaskController {
         User user = userRepository.findByEmail(request.getRemoteUser());
         model.addAttribute("tasks", taskService.getAllTasksOfUser(user));
         model.addAttribute("notificationsForLayout", notificationService.getAllActiveNotifications().size());
-        model.addAttribute("tasksForLayout", taskService.getAllActiveTasks().size());
+        model.addAttribute("tasksForLayout", taskService.getAllTasksOfUser(user).size());
         return "task/tasks-list";
     }
 
     @RequestMapping("/tasks/all-tasks-list")
     public String allTasksList(WebRequest request, Model model) {
+        User user = userRepository.findByEmail(request.getRemoteUser());
         model.addAttribute("tasks", taskService.getAllActiveTasks());
         model.addAttribute("notificationsForLayout", notificationService.getAllActiveNotifications().size());
-        model.addAttribute("tasksForLayout", taskService.getAllActiveTasks().size());
+        model.addAttribute("tasksForLayout", taskService.getAllTasksOfUser(user).size());
         return "task/tasks-list";
     }
 
     @RequestMapping("/tasks/add-task")
     public String addTask(WebRequest request, Model model) {
+        User user = userRepository.findByEmail(request.getRemoteUser());
         model.addAttribute("priorities", priorityRepository.findAll());
         model.addAttribute("types", typeRepository.findAll());
         model.addAttribute("users", userRepository.findAll());
         model.addAttribute("notifications", notificationService.getAllActiveNotifications());
         model.addAttribute("notificationsForLayout", notificationService.getAllActiveNotifications().size());
-        model.addAttribute("tasksForLayout", taskService.getAllActiveTasks().size());
+        model.addAttribute("tasksForLayout", taskService.getAllTasksOfUser(user).size());
         return "task/add-task";
     }
 
     @RequestMapping("/tasks/archived-tasks")
     public String archivedTasks(WebRequest request, Model model) {
+        User user = userRepository.findByEmail(request.getRemoteUser());
         model.addAttribute("tasks", taskService.getAllArchivedTasks());
         model.addAttribute("notificationsForLayout", notificationService.getAllActiveNotifications().size());
-        model.addAttribute("tasksForLayout", taskService.getAllActiveTasks().size());
+        model.addAttribute("tasksForLayout", taskService.getAllTasksOfUser(user).size());
         return "task/tasks-list";
     }
 

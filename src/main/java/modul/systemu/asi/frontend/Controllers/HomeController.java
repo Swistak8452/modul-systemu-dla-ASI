@@ -26,7 +26,7 @@ public class HomeController {
     public String home(WebRequest request, Model model) {
         User user = userRepository.findByEmail(request.getRemoteUser());
         model.addAttribute("user", user);
-        model.addAttribute("tasksForLayout", taskService.getAllActiveTasks().size());
+        model.addAttribute("tasksForLayout", taskService.getAllTasksOfUser(user).size());
         model.addAttribute("notificationsForLayout", notificationService.getAllActiveNotifications().size());
         return "index";
     }

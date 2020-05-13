@@ -15,6 +15,7 @@ public class User {
     private long id;
     private String firstName;
     private String lastName;
+    @Column(name = "userFunction")
     private String function;
     @Column(unique = true, nullable = false)
     private String email;

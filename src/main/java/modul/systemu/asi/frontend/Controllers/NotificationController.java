@@ -1,9 +1,11 @@
 package modul.systemu.asi.frontend.Controllers;
 
 import modul.systemu.asi.backend.dao.CommentRepository;
+import modul.systemu.asi.backend.dao.UserRepository;
 import modul.systemu.asi.backend.services.NotificationService;
 import modul.systemu.asi.backend.services.TaskService;
 import modul.systemu.asi.frontend.model.Notification;
+import modul.systemu.asi.frontend.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +15,9 @@ import org.springframework.web.context.request.WebRequest;
 
 @Controller
 public class NotificationController {
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private NotificationService notificationService;
@@ -25,25 +30,28 @@ public class NotificationController {
 
     @RequestMapping("/notifications/notification-list")
     public String notificationList(WebRequest request, Model model) {
+        User user = userRepository.findByEmail(request.getRemoteUser());
         model.addAttribute("notifications", notificationService.getAllActiveNotifications());
         model.addAttribute("notificationsForLayout", notificationService.getAllActiveNotifications().size());
-        model.addAttribute("tasksForLayout", taskService.getAllActiveTasks().size());
+        model.addAttribute("tasksForLayout", taskService.getAllTasksOfUser(user).size());
         return "notification/notification-list";
     }
 
     @RequestMapping("/notifications/add-notification")
     public String addNotifications(WebRequest request, Model model) {
+        User user = userRepository.findByEmail(request.getRemoteUser());
         Notification notification = new Notification();
         model.addAttribute("notificationsForLayout", notificationService.getAllActiveNotifications().size());
-        model.addAttribute("tasksForLayout", taskService.getAllActiveTasks().size());
+        model.addAttribute("tasksForLayout", taskService.getAllTasksOfUser(user).size());
         return "notification/add-notification";
     }
 
     @RequestMapping("/notifications/archived-notifications")
     public String archivedNotifications(WebRequest request, Model model) {
+        User user = userRepository.findByEmail(request.getRemoteUser());
         model.addAttribute("notifications", notificationService.getAllArchivedNotifications());
         model.addAttribute("notificationsForLayout", notificationService.getAllActiveNotifications().size());
-        model.addAttribute("tasksForLayout", taskService.getAllActiveTasks().size());
+        model.addAttribute("tasksForLayout", taskService.getAllTasksOfUser(user).size());
         return "notification/notification-list";
     }
 
