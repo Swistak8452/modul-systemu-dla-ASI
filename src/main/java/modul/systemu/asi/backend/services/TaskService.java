@@ -71,7 +71,7 @@ public class TaskService {
     }
 
     public List<Task> getAllTasksOfUser(User user){
-        List<Task> tasks = taskRepository.findAllByAssignedPersonIsLikeOrderByDeadlineAsc(user);
+        List<Task> tasks = taskRepository.findAllByAssignedPersonIsLikeAndArchivedOrderByDeadlineAsc(user, false);
         return tasks;
     }
 

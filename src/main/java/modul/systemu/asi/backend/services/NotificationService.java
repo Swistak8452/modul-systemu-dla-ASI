@@ -45,11 +45,6 @@ public class NotificationService {
         return notifications;
     }
 
-    public List<Notification> getAllNotrificationsOfUser(User user){
-        List<Notification> notifications = notificationRepository.findAllByOrderByDate();
-        return notifications;
-    }
-
     public List<Notification> getAllActiveNotifications(){
         List<Notification> notifications = notificationRepository.findAllByArchivedOrderByDate(false);
         return notifications;

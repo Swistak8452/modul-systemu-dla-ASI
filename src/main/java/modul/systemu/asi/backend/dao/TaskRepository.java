@@ -20,7 +20,7 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 
     List<Task> findAllByRelatedNotificationIsLikeOrderByDeadlineAsc(Notification notification);
 
-    List<Task> findAllByAssignedPersonIsLikeOrderByDeadlineAsc(User user);
+    List<Task> findAllByAssignedPersonIsLikeAndArchivedOrderByDeadlineAsc(User user, boolean isArchived);
 
     Task findByOrderByIdDesc();
 }
