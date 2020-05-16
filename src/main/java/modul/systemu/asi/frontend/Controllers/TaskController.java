@@ -102,13 +102,36 @@ public class TaskController {
     }
 
     @RequestMapping("/tasks/update-task")
-    public String updateTask(WebRequest request, Model model, @RequestParam long taskId) {
+    public String updateTask(WebRequest request, Model model, @RequestParam long taskId) throws NullPointerException{
         model.addAttribute("priorities", priorityRepository.findAll());
         model.addAttribute("types", typeRepository.findAll());
         model.addAttribute("users", userRepository.findAll());
         model.addAttribute("statuses", statusRepository.findAll());
         model.addAttribute("notifications", notificationService.getAllActiveNotifications());
+        Task currentTask = taskService.getTaskById(taskId);
+        String email;
+        Long assignedPersonId;
+        if(currentTask.getAssignedPerson() == null){
+            email = "------";
+            assignedPersonId = 0l;
+        }else {
+            email = currentTask.getAssignedPerson().getEmail();
+            assignedPersonId = currentTask.getAssignedPerson().getId();
+        }
+        String relatedNotificationName;
+        Long relatedNotificationId;
+        if(currentTask.getRelatedNotification() == null){
+            relatedNotificationName = "------";
+            relatedNotificationId = 0l;
+        }else {
+            relatedNotificationName = currentTask.getRelatedNotification().getName();
+            relatedNotificationId = currentTask.getRelatedNotification().getId();
+        }
         model.addAttribute("task", taskService.getTaskById(taskId));
+        model.addAttribute("taskAssignedPersonEmail", email);
+        model.addAttribute("taskAssignedPersonId", assignedPersonId);
+        model.addAttribute("relatedNotificationName", relatedNotificationName);
+        model.addAttribute("relatedNotificationId", relatedNotificationId);
         return "task/update-task";
     }
 

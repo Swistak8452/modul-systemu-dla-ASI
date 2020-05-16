@@ -63,14 +63,14 @@
             <label for="taskRelatedNotification" style="font-weight: bold">Wybierz powiązane zgłoszenie:</label>
             <div class="form-group input-group flex-nowrap">
                 <div class="input-group-prepend">
-                    <span class="input-group-text border prepend-label" th:text="${task.relatedNotification.name}"></span>
+                    <span class="input-group-text border prepend-label" th:text="${relatedNotificationName}"></span>
                 </div>
                 <select class="form-control" id="taskRelatedNotification" style="width: auto">
                     <option th:value="0" th:text="------"></option>
                     <option th:each="notification : ${notifications}"
                             th:value="${notification.id}"
                             th:text="${notification.name}"
-                            th:selected="${notification.id == task.relatedNotification.id}">
+                            th:selected="${relatedNotificationId}">
                     </option>
                 </select>
                 <div id="invalidTaskRelatedNotification" class="invalid-feedback" style="display: none">
@@ -81,14 +81,14 @@
             <label for="taskAssignedPerson" style="font-weight: bold">Przypisz użytkownika:</label>
             <div class="form-group input-group flex-nowrap">
                 <div class="input-group-prepend">
-                    <span class="input-group-text border prepend-label" th:text="${task.assignedPerson.email}"></span>
+                    <span class="input-group-text border prepend-label" th:text="${taskAssignedPersonEmail}"></span>
                 </div>
                 <select class="form-control" id="taskAssignedPerson" style="width: auto">
                     <option th:value="0" th:text="------"></option>
                     <option th:each="user : ${users}"
                             th:value="${user.id}"
                             th:text="${user.email}"
-                            th:selected="${user.id == task.assignedPerson.id}">
+                            th:selected="${taskAssignedPersonId}">
                     </option>
                 </select>
                 <div id="invalidTaskAssignedPerson" class="invalid-feedback" style="display: none">

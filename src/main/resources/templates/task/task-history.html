@@ -87,14 +87,18 @@
                 <td th:if="${taskHistory.previousAssignedPerson == null}">------</td>
                 <td th:if="${taskHistory.previousAssignedPerson != null}"
                     th:text="${taskHistory.previousAssignedPerson.email}"></td>
-                <td th:text="${taskHistory.newAssignedPerson.email}"></td>
+                <td th:if="${taskHistory.newAssignedPerson == null}">------</td>
+                <td th:if="${taskHistory.newAssignedPerson != null}"
+                    th:text="${taskHistory.newAssignedPerson.email}">------</td>
             </tr>
             <tr class="row-related-notification">
                 <th scope="row">Powiązane zgloszenie:</th>
                 <td th:if="${taskHistory.previousRelatedNotification == null}">------</td>
                 <td th:if="${taskHistory.previousRelatedNotification != null}"
                     th:text="${taskHistory.previousRelatedNotification.name}"></td>
-                <td th:text="${taskHistory.newRelatedNotification.name}"></td>
+                <td th:if="${taskHistory.newRelatedNotification == null}">------</td>
+                <td th:if="${taskHistory.newRelatedNotification != null}"
+                    th:text="${taskHistory.newRelatedNotification.name}"></td>
             </tr>
             <tr class="row-description">
                 <th scope="row">Opis:</th>
